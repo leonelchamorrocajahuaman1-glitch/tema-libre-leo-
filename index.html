@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Leon Vasari — Archivo fílmico</title>
+<title>Archivo Leon Vasari</title>
 <meta name="description" content="Archivo fílmico de Leon Vasari: doce películas en VHS sobre una estantería curva.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,6 +89,37 @@ h1,h2,p{margin:0;font-weight:inherit}
 .face::after{content:"";position:absolute;inset:0;border-radius:inherit;background:#000;opacity:var(--shade,0);pointer-events:none}
 .sp{width:var(--ws);left:calc(var(--ws) / -2);transform:translateZ(calc(var(--d) / 2))}
 .cv{width:var(--d);left:calc(var(--d) / -2);transform:rotateY(90deg) translateZ(calc(var(--ws) / 2));box-shadow:0 34px 60px -30px rgba(20,16,10,.6)}
+
+/* respaldo dibujado cuando las hojas de arte no cargan */
+.ph{display:none}
+.noart .face{background-image:none !important}
+.noart .ph{display:flex}
+.ph-sp{
+  position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:space-between;gap:6%;
+  padding:9% 0 7%;background:var(--fc);color:#F1E8D6;border-radius:inherit;overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.18),inset 3px 0 0 rgba(255,255,255,.08);
+}
+.ph-sp .dot{width:46%;aspect-ratio:1;border-radius:50%;background:var(--sc);flex:none}
+.ph-sp .t{
+  flex:1;min-height:0;writing-mode:vertical-rl;font-weight:600;font-size:calc(var(--ws) * .3);
+  letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;line-height:1;overflow:hidden;
+}
+.ph-sp .v{font-weight:600;font-size:calc(var(--ws) * .13);letter-spacing:.14em;flex:none}
+.ph-sp .b{font-weight:700;font-size:calc(var(--ws) * .13);border:1px solid currentColor;padding:2px 3px;letter-spacing:.06em;flex:none}
+.ph-cv{
+  position:absolute;inset:0;flex-direction:column;gap:3.5%;padding:9% 8% 8%;background:#EDE3CF;color:var(--fc);
+  border-radius:inherit;overflow:hidden;font-family:var(--sans);
+}
+.ph-cv .k{font-size:calc(var(--d) * .042);letter-spacing:.2em;font-weight:600;line-height:1.2}
+.ph-cv .t{font-weight:600;font-size:calc(var(--d) * .125);line-height:.95;letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance}
+.ph-cv .art{flex:1;min-height:0;position:relative;overflow:hidden;background:var(--fc)}
+.ph-cv .art::before{content:"";position:absolute;left:24%;top:18%;width:52%;aspect-ratio:1;border-radius:50%;background:var(--sc)}
+.ph-cv .art::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:
+  repeating-linear-gradient(180deg,#EDE3CF 0 2px,transparent 2px 9px),var(--fc);
+}
+.ph-cv .ft{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:calc(var(--d) * .045);letter-spacing:.14em}
+.ph-cv .b{border:1px solid currentColor;padding:2px 6px;font-weight:700}
 
 /* aro de reproducción */
 .play{
@@ -269,7 +300,12 @@ h1,h2,p{margin:0;font-weight:inherit}
           </g>
         </mask>
       </defs>
-      <g clip-path="url(#pclip)"><image id="pimg" preserveAspectRatio="none" mask="url(#pmask)"/></g>
+      <g clip-path="url(#pclip)">
+        <g mask="url(#pmask)">
+          <foreignObject width="474" height="900"><div xmlns="http://www.w3.org/1999/xhtml" class="ph ph-cv" id="pfb" style="--d:474px"></div></foreignObject>
+          <image id="pimg" preserveAspectRatio="none"/>
+        </g>
+      </g>
     </svg>
   </div>
 </section>
@@ -307,7 +343,15 @@ const CROP = {
   'spine-war': ['spines', 2236, 31, 189, 1089],     'cover-war': ['covers', 913, 1579, 343, 676],
   'spine-door': ['spines', 2462, 31, 188, 1089],    'cover-door': ['covers', 1331, 1579, 344, 677],
 };
-Object.values(SHEET).forEach(([u]) => { const im = new Image(); im.decoding = 'async'; im.src = u; });
+Object.values(SHEET).forEach(([u]) => {
+  const im = new Image();
+  im.onerror = () => document.documentElement.classList.add('noart');
+  im.src = u;
+});
+/* colores serigráficos del respaldo: [fondo, acento] */
+const PAL = [['#1F3FB0','#C8472B'],['#2B4C9A','#E9B44C'],['#8A3B22','#EDE3CF'],['#C8472B','#1F3FB0'],['#2F5D50','#E9B44C'],['#B5532F','#141414'],
+             ['#141414','#C8472B'],['#4A5A8C','#EDE3CF'],['#1E3A5F','#E9B44C'],['#2F6F87','#EDE3CF'],['#6B5B3E','#C8472B'],['#A3261E','#141414']];
+const coverPH = (f) => `<span class="k">UNA PELÍCULA DE LEON VASARI</span><span class="t">${f.t}</span><span class="art"></span><span class="ft"><span>${f.y}</span><span class="b">VHS</span></span>`;
 
 function faceBg(key) {
   const [sh, x, y, w, h] = CROP[key];
@@ -352,7 +396,10 @@ for (let c = 0; c < 3; c++) for (let i = 0; i < N; i++) {
   const f = FILMS[i];
   const el = document.createElement('div');
   el.className = 'tape';
-  el.innerHTML = `<div class="face sp" style='${faceBg('spine-' + f.id)}'></div><div class="face cv" style='${faceBg('cover-' + f.id)}'></div>`;
+  el.style.setProperty('--fc', PAL[i][0]);
+  el.style.setProperty('--sc', PAL[i][1]);
+  el.innerHTML = `<div class="face sp" style='${faceBg('spine-' + f.id)}'><div class="ph ph-sp"><span class="dot"></span><span class="t">${f.t}</span><span class="v">VASARI</span><span class="b">VHS</span></div></div>`
+    + `<div class="face cv" style='${faceBg('cover-' + f.id)}'><div class="ph ph-cv">${coverPH(f)}</div></div>`;
   stage.appendChild(el);
   const t = { el, sp: el.children[0], cv: el.children[1], v: c * N + i, i, lift: 0 };
   el._t = t;
@@ -455,6 +502,10 @@ function openDetail() {
   pimg.setAttribute('href', url);
   pimg.setAttribute('x', -x * 474 / w); pimg.setAttribute('y', -y * 900 / h);
   pimg.setAttribute('width', SW * 474 / w); pimg.setAttribute('height', SH * 900 / h);
+  const pfb = $('pfb');
+  pfb.innerHTML = coverPH(f);
+  pfb.style.setProperty('--fc', PAL[active][0]);
+  pfb.style.setProperty('--sc', PAL[active][1]);
   blots.forEach((b) => b.setAttribute('r', 0));
   const from = coverInset();
   isOpen = true;
