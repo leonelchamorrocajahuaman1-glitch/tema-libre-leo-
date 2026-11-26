@@ -7,7 +7,7 @@
 <meta name="description" content="Archivo fílmico de Leon Vasari: doce películas en VHS sobre una estantería curva.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Noto+Sans+JP:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Noto+Sans+JP:wght@500&family=VT323&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@800&text=%E6%98%A0%E7%94%BB%E3%81%AE%E8%A8%98%E6%86%B6&display=block">
 <style>
 :root{
@@ -31,6 +31,7 @@ a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;-webkit-tap-highlight-color:transparent}
 h1,h2,p{margin:0;font-weight:inherit}
 :focus-visible{outline:1px solid var(--cobalt);outline-offset:4px}
+[hidden]{display:none !important}
 
 .lbl{font-family:var(--sans);font-weight:600;font-size:10.5px;line-height:1;letter-spacing:.14em;text-transform:uppercase}
 .box{display:inline-flex;align-items:center;height:21px;padding:0 8px;border:1px solid var(--rule)}
@@ -201,6 +202,81 @@ h1,h2,p{margin:0;font-weight:inherit}
 .d-right{display:flex;align-items:center;justify-content:flex-start;min-height:0}
 .d-right svg{display:block;height:min(100%,78vh);width:auto;max-width:100%;aspect-ratio:474/900}
 
+/* botones de navegación */
+.nav-link{color:inherit}
+.nav-link[aria-expanded="true"],.nav-link.cur{text-decoration:underline;text-underline-offset:6px}
+
+/* hojas: películas, acerca de, diario, menú */
+.panel{
+  position:fixed;inset:0;z-index:58;background:var(--sheet);display:none;overflow-y:auto;overscroll-behavior:contain;
+  padding:110px 7vw 72px;
+}
+.panel.on{display:block}
+.panel{padding-top:150px}
+.panel .d-close{top:96px}
+body.panel-open .top{z-index:59;background:var(--sheet)}
+.p-body{max-width:1180px;margin:0 auto;display:grid;gap:36px}
+.p-head{display:grid;gap:12px}
+.p-h{font-weight:600;font-size:clamp(44px,6vw,96px);letter-spacing:-.03em;line-height:1;color:var(--cobalt);padding-bottom:.05em}
+.p-k{color:var(--muted)}
+.p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:34px 22px}
+.p-film{display:grid;gap:10px;text-align:left;align-content:start}
+.p-cv{display:block;width:100%;aspect-ratio:196/382;background-repeat:no-repeat;border-radius:2px;
+  box-shadow:0 22px 34px -22px rgba(20,16,10,.55);transition:transform .45s var(--ease)}
+.p-film:hover .p-cv,.p-film:focus-visible .p-cv{transform:translateY(-6px)}
+.p-film.cur .p-cv{outline:1px solid var(--cobalt);outline-offset:5px}
+.p-ft{font-weight:600;font-size:16px;letter-spacing:-.01em;color:var(--cobalt);line-height:1.15}
+.p-fm{color:var(--muted);font-size:9.5px}
+.p-about{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:6vw;align-items:start}
+.p-bio{display:grid;gap:18px;font-family:var(--serif);font-size:19px;line-height:1.55;max-width:60ch}
+.p-facts{display:grid;gap:0;border-top:1px solid var(--rule)}
+.p-facts div{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid rgba(20,20,20,.18)}
+.p-facts dt{color:var(--muted)}
+.p-facts dd{margin:0;font-weight:500;font-size:14px}
+.p-journal{display:grid;border-top:1px solid var(--rule)}
+.p-entry{display:grid;grid-template-columns:150px minmax(0,1fr) 120px;gap:24px;padding:26px 0;border-bottom:1px solid rgba(20,20,20,.18);align-items:baseline}
+.p-entry h3{margin:0 0 8px;font-weight:600;font-size:22px;letter-spacing:-.015em;color:var(--cobalt)}
+.p-entry p{margin:0;font-family:var(--serif);font-size:17px;line-height:1.5;max-width:62ch}
+.p-entry .go{justify-self:end;color:var(--cobalt)}
+.p-menu{display:grid;border-top:1px solid var(--rule)}
+.p-menu button{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid rgba(20,20,20,.18);text-align:left;color:var(--cobalt)}
+.p-menu .big{font-weight:600;font-size:clamp(40px,7vw,92px);letter-spacing:-.03em;line-height:1}
+.p-menu .lbl{color:var(--muted)}
+.p-social{display:flex;gap:24px;color:var(--cobalt)}
+.p-social a{text-decoration:underline;text-underline-offset:4px}
+.m.blk{display:block}
+
+/* reproductor VHS */
+.player{position:fixed;inset:0;z-index:80;background:#070707;display:none;color:#F3F0EA}
+.player.on{display:block}
+.pv-screen{
+  position:absolute;left:50%;top:46%;width:min(92vw,118vh);aspect-ratio:4/3;max-height:80vh;transform:translate(-50%,-50%);
+  overflow:hidden;background:#000;border-radius:14px/18px;box-shadow:0 0 0 1px #1c1c1c,0 40px 120px rgba(0,0,0,.6);
+}
+.pv-art{
+  position:absolute;left:50%;top:0;width:102%;aspect-ratio:196/382;background-repeat:no-repeat;
+  transform:translate(-50%,-44%);filter:blur(1.1px) contrast(1.1) saturate(1.2);
+}
+.pv-card{position:absolute;inset:0;background:#000;display:grid;place-content:center;justify-items:center;gap:14px;text-align:center;padding:0 8%}
+.pv-card .pv-pre{font-family:"VT323",ui-monospace,monospace;font-size:clamp(16px,2.2vw,24px);letter-spacing:.18em;text-transform:uppercase;color:#cfc8b8}
+.pv-card strong{font-weight:600;font-size:clamp(30px,5vw,64px);letter-spacing:-.02em;line-height:1.05;color:#F3F0EA}
+.pv-card span:last-child{font-family:"Noto Sans JP",sans-serif;font-size:clamp(14px,1.6vw,18px);color:#cfc8b8}
+#pvStatic{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated}
+.pv-lines{position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
+.pv-lines::after{content:"";position:absolute;left:0;right:0;height:14%;top:-15%;
+  background:linear-gradient(180deg,transparent,rgba(255,255,255,.07) 45%,rgba(255,255,255,.12) 50%,transparent);
+  animation:track 7s linear infinite}
+@keyframes track{to{top:115%}}
+.player.paused .pv-lines::after{animation-play-state:paused}
+.pv-osd{position:absolute;font-family:"VT323",ui-monospace,monospace;font-size:clamp(20px,2.6vw,32px);letter-spacing:.04em;color:#fff;
+  text-shadow:2px 0 rgba(255,40,40,.55),-2px 0 rgba(40,120,255,.55);display:flex;align-items:center;gap:10px}
+.pv-osd svg{width:.6em;height:.6em;fill:#fff}
+.pv-tl{left:5%;top:5%}.pv-tr{right:5%;top:5%}.pv-br{right:5%;bottom:5%;font-variant-numeric:tabular-nums}
+.pv-ctrl{position:absolute;left:50%;bottom:max(24px,4vh);transform:translateX(-50%);display:flex;gap:12px}
+.pv-btn{height:40px;padding:0 16px;border:1px solid rgba(243,240,234,.6);color:#F3F0EA;white-space:nowrap}
+.pv-btn:hover{background:rgba(243,240,234,.1)}
+
 /* móvil */
 @media (max-width:767px){
   .top{height:60px;padding:0 16px}
@@ -222,6 +298,15 @@ h1,h2,p{margin:0;font-weight:inherit}
   .d-title{font-size:42px}
   .d-close{left:16px;top:20px}
   .d-brand{right:16px;top:20px}
+  .panel{padding:124px 20px 48px}
+  .panel .d-close{top:74px}
+  .p-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 16px}
+  .p-about{grid-template-columns:1fr}
+  .p-entry{grid-template-columns:1fr;gap:8px}
+  .p-entry .go{justify-self:start}
+  .p-bio{font-size:17px}
+  .pv-screen{top:42%}
+  .pv-ctrl{bottom:max(28px,6vh)}
 }
 </style>
 </head>
@@ -229,12 +314,12 @@ h1,h2,p{margin:0;font-weight:inherit}
 <div id="probe" aria-hidden="true"></div>
 
 <header class="top">
-  <a class="brand lbl" href="#" aria-label="Leon Vasari, archivo fílmico">LEON VASARI <span class="line" aria-hidden="true"></span> ARCHIVO FÍLMICO</a>
+  <a class="brand lbl" href="#" id="home" aria-label="Leon Vasari, archivo fílmico: volver al inicio">LEON VASARI <span class="line" aria-hidden="true"></span> ARCHIVO FÍLMICO</a>
   <nav class="nav" aria-label="Principal">
-    <a class="lbl" href="#">Películas</a>
-    <a class="lbl" href="#">Acerca de</a>
-    <a class="lbl" href="#">Diario</a>
-    <button class="burger" type="button" aria-label="Abrir menú"></button>
+    <button class="lbl nav-link" type="button" data-panel="films">Películas</button>
+    <button class="lbl nav-link" type="button" data-panel="about">Acerca de</button>
+    <button class="lbl nav-link" type="button" data-panel="journal">Diario</button>
+    <button class="burger" type="button" id="menuBtn" data-panel="menu" aria-label="Abrir menú" aria-expanded="false"></button>
   </nav>
 </header>
 
@@ -266,7 +351,7 @@ h1,h2,p{margin:0;font-weight:inherit}
 
 <footer class="foot">
   <span class="lbl">© Leon Vasari. Todos los derechos reservados.</span>
-  <span class="lbl"><a href="#">FB</a> / <a href="#">TW</a></span>
+  <span class="lbl"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fclaude.ai%2Fartifact%2FAxtsvsqNE6GWokb4q2aJ9w" target="_blank" rel="noopener" aria-label="Compartir en Facebook">FB</a> / <a href="https://twitter.com/intent/tweet?text=Archivo%20f%C3%ADlmico%20de%20Leon%20Vasari%3A%20doce%20pel%C3%ADculas%20en%20VHS.&url=https%3A%2F%2Fclaude.ai%2Fartifact%2FAxtsvsqNE6GWokb4q2aJ9w" target="_blank" rel="noopener" aria-label="Compartir en X (Twitter)">TW</a></span>
 </footer>
 
 <section class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle" aria-hidden="true">
@@ -278,7 +363,7 @@ h1,h2,p{margin:0;font-weight:inherit}
     <span class="m"><span class="r lbl d-meta" id="dMeta"></span></span>
     <span class="m"><p class="r d-syn" id="dSyn"></p></span>
     <span class="m"><p class="r d-credit">Escrita y dirigida por Leon Vasari. 監督作品</p></span>
-    <span class="m"><span class="r"><button class="d-watch lbl" type="button">Ver la película / 映画を見る</button></span></span>
+    <span class="m"><span class="r"><button class="d-watch lbl" type="button" id="watch">Ver la película / 映画を見る</button></span></span>
   </div>
   <div class="d-right">
     <svg viewBox="0 0 474 900" role="img" aria-label="Portada de la película">
@@ -307,6 +392,27 @@ h1,h2,p{margin:0;font-weight:inherit}
         </g>
       </g>
     </svg>
+  </div>
+</section>
+
+<section class="panel" id="panel" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Archivo">
+  <button class="d-close lbl box" id="pClose" type="button">Cerrar / 閉じる</button>
+  <div class="p-body" id="pBody"></div>
+</section>
+
+<section class="player" id="player" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Reproductor de vídeo">
+  <div class="pv-screen" id="pvScreen">
+    <div class="pv-art" id="pvArt"></div>
+    <div class="pv-card" id="pvCard"><span class="pv-pre">Leon Vasari presenta</span><strong id="pvTitle"></strong><span id="pvKj"></span></div>
+    <canvas id="pvStatic" width="192" height="144"></canvas>
+    <div class="pv-lines" aria-hidden="true"></div>
+    <div class="pv-osd pv-tl" id="pvMode">PLAY <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z"/></svg></div>
+    <div class="pv-osd pv-tr">SP</div>
+    <div class="pv-osd pv-br" id="pvTime">0:00:00</div>
+  </div>
+  <div class="pv-ctrl">
+    <button class="lbl pv-btn" type="button" id="pvToggle">Pausa / 一時停止</button>
+    <button class="lbl pv-btn" type="button" id="pvStop">Detener / 停止</button>
   </div>
 </section>
 
@@ -459,6 +565,7 @@ let s = START, T = START, active = 5;
 let dragging = false, pressed = false, downX = 0, T0 = 0, downTape = null, moved = false;
 let mx = W / 2, my = VH / 2, cx = mx, cyc = my, pointerIn = false, cursorShown = false;
 let tiltX = 0, tiltY = 0, onCover = false, hoverTape = null, overBtn = false;
+let panelOn = false, playerOn = false;
 let dotYear = FILMS[5].y, isOpen = false, inkStart = -1e9, wheelTimer = 0;
 
 /* ---------- Pie de foto ---------- */
@@ -542,12 +649,13 @@ function closeDetail() {
 $('close').addEventListener('click', closeDetail);
 
 /* ---------- Entradas ---------- */
-const step = (n) => { if (!isOpen) T = Math.round(T) + n; };
+const blocked = () => isOpen || panelOn || playerOn;
+const step = (n) => { if (!blocked()) T = Math.round(T) + n; };
 $('prev').addEventListener('click', () => step(-1));
 $('next').addEventListener('click', () => step(1));
 
 shelf.addEventListener('pointerdown', (e) => {
-  if (isOpen || (e.pointerType === 'mouse' && e.button !== 0)) return;
+  if (blocked() || (e.pointerType === 'mouse' && e.button !== 0)) return;
   pressed = true; moved = false; downX = e.clientX; T0 = T;
   downTape = e.target.closest('.tape');
 });
@@ -569,7 +677,7 @@ function release(e) {
   if (!pressed) return;
   pressed = false;
   if (dragging) { dragging = false; T = Math.round(T); return; }
-  if (moved || isOpen || !downTape) return;
+  if (moved || blocked() || !downTape) return;
   const t = downTape._t, r = rel(t.v, s);
   if (Math.abs(r) < .5 && Math.abs(T - s) < .3) openDetail();
   else T = Math.round(T + r);
@@ -579,7 +687,7 @@ addEventListener('pointercancel', () => { if (dragging) T = Math.round(T); press
 document.addEventListener('pointerleave', () => { pointerIn = false; hoverTape = null; cursor.classList.remove('on'); cursorShown = false; });
 
 addEventListener('wheel', (e) => {
-  if (isOpen) return;
+  if (blocked()) return;
   e.preventDefault();
   const dl = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
   const k = e.deltaMode === 1 ? 16 : 1;
@@ -589,24 +697,245 @@ addEventListener('wheel', (e) => {
 }, { passive: false });
 
 addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') { closeDetail(); return; }
-  if (isOpen) return;
+  if (e.key === 'Escape') {
+    if (playerOn) closePlayer();
+    else if (panelOn) closePanel();
+    else closeDetail();
+    return;
+  }
+  if (playerOn && e.key === ' ') { e.preventDefault(); togglePlayer(); return; }
+  if (blocked()) return;
   if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
   else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
   else if (e.key === 'Enter' && !e.target.closest('button, a')) { e.preventDefault(); openDetail(); }
 });
 
 tlHit.addEventListener('click', (e) => {
-  if (isOpen) return;
+  if (blocked()) return;
   const r = tlHit.parentElement.getBoundingClientRect();
   const year = 1955 + 35 * Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
   let best = 0;
   FILMS.forEach((f, i) => { if (Math.abs(f.y - year) < Math.abs(FILMS[best].y - year)) best = i; });
+  goTo(best);
+});
+function goTo(i) {
   const base = Math.round(T);
-  let diff = mod(best - mod(base, N), N);
+  let diff = mod(i - mod(base, N), N);
   if (diff > N / 2) diff -= N;
   T = base + diff;
+}
+
+
+/* ---------- Hojas: películas, acerca de, diario, menú ---------- */
+const panel = $('panel'), pBody = $('pBody'), menuBtn = $('menuBtn');
+const navBtns = [...document.querySelectorAll('[data-panel]')];
+const JOURNAL = [
+  { d: '12 · III · 1958', f: 0, t: 'El valle no quiere cámaras', x: 'Tercer día sin rodar. La niebla baja a las diez y no se levanta hasta la tarde. En el pueblo dicen que siempre ha sido así; yo creo que nos están mirando a nosotros.' },
+  { d: '4 · VIII · 1964', f: 2, t: 'Dos toneladas de sal', x: 'Cargamos la barcaza con sal de verdad. La falsa flotaba demasiado y los actores lo notaban en los brazos. Ahora reman como quien carga algo que nadie quiere.' },
+  { d: '21 · VI · 1971', f: 5, t: 'Sólo a mediodía', x: 'Rodamos entre las doce y la una, ni un minuto más. Con el sol arriba no hay sombras y el desierto se vuelve una página en blanco.' },
+  { d: '9 · XI · 1978', f: 8, t: 'La tormenta llegó sola', x: 'La tormenta del guion llegó de verdad. Atamos la cámara a la barandilla del faro y dejamos que el mar dirigiera la escena durante tres días.' },
+  { d: '30 · XII · 1989', f: 11, t: 'Última noche en el Odeón', x: 'Cerraron el cine. Rodamos la puerta roja en su pasillo antes de que se llevaran las butacas. Creo que es la última película que hago.' },
+];
+const line = (html, cls = '') => `<span class="m blk"><span class="r ${cls}">${html}</span></span>`;
+const PANELS = {
+  films: () => `
+    <div class="p-head">${line('Películas', 'p-h')}${line('映画 · 12 títulos · 1958–1989', 'lbl p-k')}</div>
+    <div class="p-grid">${FILMS.map((f, i) => `
+      <button type="button" class="p-film${i === active ? ' cur' : ''}" data-film="${i}" aria-label="${f.t}, ${f.y}">
+        <span class="p-cv" style='${faceBg('cover-' + f.id)}'></span>
+        <span class="p-ft">${f.t}</span>
+        <span class="lbl p-fm">${f.y} — ${f.g.toUpperCase()}</span>
+      </button>`).join('')}</div>`,
+  about: () => `
+    <div class="p-head">${line('Leon Vasari', 'p-h')}${line('略歴 · Director · 1927–1994', 'lbl p-k')}</div>
+    <div class="p-about">
+      <div class="p-bio">
+        ${line('Leon Vasari rodó doce largometrajes entre 1958 y 1989. Hijo de un proyeccionista de Trieste y de una traductora de Kioto, creció entre dos idiomas y dos cines, y nunca terminó de elegir entre ellos.')}
+        ${line('Sus películas son lentas, precisas y casi siempre ocurren en lugares a punto de desaparecer: un valle, un puerto, un pueblo que la presa va a inundar. Trabajó treinta años con el mismo director de fotografía y montaba de noche, en una sala alquilada encima de un cine.')}
+        ${line('Este archivo reúne las doce películas tal como circularon en VHS durante los años ochenta, con sus portadas y las notas de rodaje que dejó en sus cuadernos.')}
+      </div>
+      <dl class="p-facts">
+        ${[['Nacimiento', '1927, Trieste'], ['Largometrajes', '12'], ['En activo', '1958–1989'], ['Géneros', 'Drama, wéstern, suspense, comedia'], ['Formato', 'VHS · PAL · 4:3']].map(([a, b]) => `<div><dt class="lbl">${a}</dt><dd>${b}</dd></div>`).join('')}
+      </dl>
+    </div>`,
+  journal: () => `
+    <div class="p-head">${line('Diario', 'p-h')}${line('日誌 · Cuadernos de rodaje', 'lbl p-k')}</div>
+    <div class="p-journal">${JOURNAL.map((j) => `
+      <article class="p-entry">
+        <span class="lbl p-k">${j.d}</span>
+        <div><h3>${j.t}</h3><p>${j.x}</p></div>
+        <button type="button" class="lbl go" data-film="${j.f}">${FILMS[j.f].t} →</button>
+      </article>`).join('')}</div>`,
+  menu: () => `
+    <nav class="p-menu" aria-label="Menú">
+      ${[['films', 'Películas', '映画'], ['about', 'Acerca de', '略歴'], ['journal', 'Diario', '日誌']].map(([k, a, b]) => `
+        <button type="button" data-go="${k}">${line(a, 'big')}<span class="lbl">${b}</span></button>`).join('')}
+    </nav>
+    <div class="p-social lbl">${document.querySelector('.foot span:last-child').innerHTML}</div>`,
+};
+let panelKind = '';
+function riseLines(root, base) {
+  if (RM()) return;
+  root.querySelectorAll('.r, .p-film, .p-entry, .p-facts div').forEach((el, i) => {
+    const from = el.classList.contains('r') ? 'translateY(110%)' : 'translateY(36px)';
+    el.animate([{ transform: from }, { transform: 'translateY(0)' }],
+      { duration: 800, delay: base + Math.min(i, 16) * 45, easing: EASE, fill: 'both' });
+  });
+}
+function renderPanel(kind) {
+  panelKind = kind;
+  pBody.innerHTML = PANELS[kind]();
+  panel.setAttribute('aria-label', { films: 'Películas', about: 'Acerca de', journal: 'Diario', menu: 'Menú' }[kind]);
+  navBtns.forEach((b) => b.classList.toggle('cur', b.dataset.panel === kind && kind !== 'menu'));
+  menuBtn.setAttribute('aria-expanded', String(kind === 'menu'));
+  panel.scrollTop = 0;
+}
+function openPanel(kind) {
+  if (playerOn) return;
+  if (isOpen) { isOpen = false; detail.getAnimations({ subtree: true }).forEach((a) => a.cancel()); detail.classList.remove('on'); detail.setAttribute('aria-hidden', 'true'); }
+  if (panelOn) {
+    if (panelKind === kind && kind !== 'menu') return;
+    if (panelKind === kind) { closePanel(); return; }
+    renderPanel(kind); riseLines(pBody, 0); return;
+  }
+  renderPanel(kind);
+  panelOn = true; T = Math.round(T);
+  document.body.classList.add('panel-open');
+  panel.getAnimations().forEach((a) => a.cancel());
+  panel.classList.add('on'); panel.setAttribute('aria-hidden', 'false');
+  panel.animate([{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)' }],
+    { duration: RM() ? 1 : 850, easing: 'cubic-bezier(.76,0,.18,1)', fill: 'both' });
+  riseLines(pBody, 380);
+  $('pClose').focus({ preventScroll: true });
+}
+function closePanel(then) {
+  if (!panelOn) return;
+  panelOn = false;
+  document.body.classList.remove('panel-open');
+  navBtns.forEach((b) => b.classList.remove('cur'));
+  menuBtn.setAttribute('aria-expanded', 'false');
+  panel.getAnimations().forEach((a) => a.cancel());
+  const a = panel.animate([{ clipPath: 'inset(0 0 0% 0)' }, { clipPath: 'inset(100% 0 0 0)' }],
+    { duration: RM() ? 1 : 700, easing: 'cubic-bezier(.76,0,.18,1)', fill: 'both' });
+  a.onfinish = () => {
+    if (panelOn) return;
+    panel.classList.remove('on'); panel.setAttribute('aria-hidden', 'true');
+    panel.getAnimations({ subtree: true }).forEach((x) => x.cancel());
+    if (then) then();
+  };
+}
+navBtns.forEach((b) => b.addEventListener('click', () => openPanel(b.dataset.panel)));
+$('pClose').addEventListener('click', () => closePanel());
+pBody.addEventListener('click', (e) => {
+  const go = e.target.closest('[data-go]');
+  if (go) { renderPanel(go.dataset.go); riseLines(pBody, 0); return; }
+  const fb = e.target.closest('[data-film]');
+  if (fb) {
+    const i = +fb.dataset.film;
+    goTo(i);
+    closePanel();
+    setTimeout(() => { if (!blocked() && active === i) openDetail(); }, RM() ? 50 : 1300);
+  }
 });
+$('home').addEventListener('click', (e) => {
+  e.preventDefault();
+  if (playerOn) closePlayer();
+  if (panelOn) closePanel();
+  if (isOpen) closeDetail();
+  goTo(5);
+});
+
+/* ---------- Reproductor VHS ---------- */
+const player = $('player'), pvArt = $('pvArt'), pvCard = $('pvCard'), pvStatic = $('pvStatic');
+const pvMode = $('pvMode'), pvTime = $('pvTime'), pvToggle = $('pvToggle');
+const sctx = pvStatic.getContext('2d'), simg = sctx.createImageData(192, 144);
+let pvT0 = 0, pvElapsed = 0, pvPaused = false, pvPhase = '', pvRaf = 0, pvPan = null, pvGlitchAt = 0, pvTimers = [];
+function drawStatic(band) {
+  const d = simg.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const y = (i / 4 / 192) | 0;
+    let v = Math.random() * 255;
+    if (band >= 0 && Math.abs(y - band) > 10) { d[i + 3] = 0; continue; }
+    d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255;
+  }
+  sctx.putImageData(simg, 0, 0);
+}
+function pvLoop(now) {
+  if (!playerOn) return;
+  pvRaf = requestAnimationFrame(pvLoop);
+  if (!pvPaused && pvPhase === 'film') {
+    const secs = Math.floor(pvElapsed + (now - pvT0) / 1000);
+    pvTime.textContent = `${Math.floor(secs / 3600)}:${String(Math.floor(secs / 60) % 60).padStart(2, '0')}:${String(secs % 60).padStart(2, '0')}`;
+  }
+  if (pvPhase === 'static') { pvStatic.hidden = false; drawStatic(-1); }
+  else if (pvPhase === 'film' && !RM() && !pvPaused && now > pvGlitchAt) {
+    pvStatic.hidden = false; drawStatic(((now / 4) % 164) - 10);
+    if (now > pvGlitchAt + 140) { pvGlitchAt = now + 4000 + Math.random() * 5000; pvStatic.hidden = true; }
+  } else if (pvPhase !== 'static') pvStatic.hidden = true;
+}
+function setPhase(ph) {
+  pvPhase = ph;
+  pvCard.hidden = ph !== 'card';
+  pvArt.hidden = ph !== 'film';
+  if (ph === 'film') {
+    pvT0 = performance.now(); pvGlitchAt = pvT0 + 3500;
+    pvPan = pvArt.animate([
+      { transform: 'translate(-50%,-38%) scale(1)' },
+      { transform: 'translate(-50%,-47%) scale(1.1)' }],
+      { duration: RM() ? 1 : 42000, easing: 'ease-in-out', fill: 'both', direction: 'alternate', iterations: Infinity });
+  }
+}
+function openPlayer() {
+  if (playerOn) return;
+  const f = FILMS[active];
+  $('pvTitle').textContent = f.t; $('pvKj').textContent = f.kj;
+  pvArt.setAttribute('style', faceBg('cover-' + f.id));
+  pvElapsed = 0; pvPaused = false; pvTime.textContent = '0:00:00';
+  player.classList.remove('paused');
+  pvMode.firstChild.nodeValue = 'PLAY ';
+  pvToggle.textContent = 'Pausa / 一時停止';
+  playerOn = true;
+  player.classList.add('on'); player.setAttribute('aria-hidden', 'false');
+  const scr = $('pvScreen');
+  scr.getAnimations().forEach((a) => a.cancel());
+  if (!RM()) scr.animate([{ transform: 'translate(-50%,-50%) scale(1,.004)' }, { transform: 'translate(-50%,-50%) scale(1,1)' }], { duration: 380, easing: EASE });
+  const rm = RM();
+  setPhase(rm ? 'card' : 'static');
+  pvTimers.forEach(clearTimeout);
+  pvTimers = [setTimeout(() => setPhase('card'), rm ? 0 : 1100), setTimeout(() => setPhase('film'), rm ? 1500 : 3800)];
+  pvRaf = requestAnimationFrame(pvLoop);
+  pvToggle.focus({ preventScroll: true });
+}
+function closePlayer() {
+  if (!playerOn) return;
+  pvTimers.forEach(clearTimeout);
+  const scr = $('pvScreen');
+  const done = () => {
+    playerOn = false; cancelAnimationFrame(pvRaf);
+    pvPan?.cancel(); pvPan = null; pvPhase = '';
+    player.classList.remove('on'); player.setAttribute('aria-hidden', 'true');
+    scr.getAnimations().forEach((a) => a.cancel());
+    $('watch').focus({ preventScroll: true });
+  };
+  if (RM()) { done(); return; }
+  const a = scr.animate([
+    { transform: 'translate(-50%,-50%) scale(1,1)' },
+    { transform: 'translate(-50%,-50%) scale(1,.004)', offset: .6 },
+    { transform: 'translate(-50%,-50%) scale(0,.004)' }], { duration: 420, easing: 'ease-in', fill: 'both' });
+  a.onfinish = done;
+}
+function togglePlayer() {
+  if (pvPhase !== 'film') return;
+  pvPaused = !pvPaused;
+  player.classList.toggle('paused', pvPaused);
+  if (pvPaused) { pvElapsed += (performance.now() - pvT0) / 1000; pvPan?.pause(); }
+  else { pvT0 = performance.now(); pvPan?.play(); }
+  pvMode.firstChild.nodeValue = pvPaused ? 'PAUSA ' : 'PLAY ';
+  pvToggle.textContent = pvPaused ? 'Reproducir / 再生' : 'Pausa / 一時停止';
+}
+$('watch').addEventListener('click', openPlayer);
+$('pvStop').addEventListener('click', closePlayer);
+pvToggle.addEventListener('click', togglePlayer);
 
 addEventListener('resize', measure);
 document.fonts?.ready.then(measure);
@@ -643,11 +972,12 @@ function frame(now) {
   dot.style.left = ((dotYear - 1955) / 35 * 100) + '%';
 
   // inclinación de la portada
+  const blk = blocked();
   const settled = Math.abs(T - s) < .3;
-  onCover = !isOpen && settled && pointerIn && Math.abs(mx - W / 2) < .55 * d && Math.abs(my - cy) < .55 * H;
+  onCover = !blk && settled && pointerIn && Math.abs(mx - W / 2) < .55 * d && Math.abs(my - cy) < .55 * H;
   let tY, tX;
   if (onCover) { tY = (mx - W / 2) / (.55 * d) * 8; tX = -(my - cy) / (H / 2) * 5; }
-  else { tY = pointerIn && !isOpen ? (mx - W / 2) / W * 4 : 0; tX = 0; }
+  else { tY = pointerIn && !blk ? (mx - W / 2) / W * 4 : 0; tX = 0; }
   const kt = 1 - Math.exp(-7 * dt);
   tiltY += (tY - tiltY) * kt; tiltX += (tX - tiltX) * kt;
 
@@ -655,7 +985,7 @@ function frame(now) {
   const kl = rm ? 1 : 1 - Math.exp(-12 * dt);
   for (const t of tapes) {
     const r = rel(t.v, s);
-    const lt = hoverTape === t && Math.abs(r) > .5 && !isOpen ? 1 : 0;
+    const lt = hoverTape === t && Math.abs(r) > .5 && !blk ? 1 : 0;
     t.lift += (lt - t.lift) * kl;
     const a = Math.max(0, 1 - Math.abs(r)), o = smooth(a);
     const u = F(r);
@@ -677,7 +1007,7 @@ function frame(now) {
   }
 
   // aro de reproducción
-  const ps = isOpen ? 0 : smooth(Math.max(0, 1 - Math.abs(T - s) * 3));
+  const ps = blk ? 0 : smooth(Math.max(0, 1 - Math.abs(T - s) * 3));
   play.style.left = (W / 2 - d / 2 - 6) + 'px';
   play.style.top = (cy + .36 * H) + 'px';
   play.style.transform = `translate(-50%,-50%) scale(${ps.toFixed(3)})`;
@@ -686,7 +1016,7 @@ function frame(now) {
   const kc = 1 - Math.exp(-16 * dt);
   cx += (mx - cx) * kc; cyc += (my - cyc) * kc;
   cursor.style.transform = `translate3d(${cx - 29}px,${cyc - 29}px,0)`;
-  const state = overBtn ? 'btn' : isOpen ? '' : onCover ? 'open' : hoverTape ? 'spine' : '';
+  const state = overBtn ? 'btn' : blk ? '' : onCover ? 'open' : hoverTape ? 'spine' : '';
   if (cursor.dataset.s !== state) {
     cursor.classList.remove('open', 'spine', 'btn');
     if (state) cursor.classList.add(state);
