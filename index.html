@@ -99,7 +99,7 @@ h1,h2,p{margin:0;font-weight:inherit}
   padding:9% 0 7%;background:var(--fc);color:#F1E8D6;border-radius:inherit;overflow:hidden;
   box-shadow:inset 0 0 0 1px rgba(0,0,0,.18),inset 3px 0 0 rgba(255,255,255,.08);
 }
-.ph-sp .dot{width:46%;aspect-ratio:1;border-radius:50%;background:var(--sc);flex:none}
+.ph-sp .pic{width:74%;aspect-ratio:3/4;flex:none;background:var(--art,none) center/cover no-repeat,var(--sc);box-shadow:0 0 0 1px rgba(241,232,214,.55)}
 .ph-sp .t{
   flex:1;min-height:0;writing-mode:vertical-rl;font-weight:600;font-size:calc(var(--ws) * .3);
   letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;line-height:1;overflow:hidden;
@@ -112,7 +112,8 @@ h1,h2,p{margin:0;font-weight:inherit}
 }
 .ph-cv .k{font-size:calc(var(--d) * .042);letter-spacing:.2em;font-weight:600;line-height:1.2}
 .ph-cv .t{font-weight:600;font-size:calc(var(--d) * .125);line-height:.95;letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance}
-.ph-cv .art{flex:1;min-height:0;position:relative;overflow:hidden;background:var(--fc)}
+.ph-cv .art{flex:1;min-height:0;position:relative;overflow:hidden;background:var(--art,none) center/cover no-repeat,var(--fc)}
+.has-art .art::before,.has-art .art::after{display:none}
 .ph-cv .art::before{content:"";position:absolute;left:24%;top:18%;width:52%;aspect-ratio:1;border-radius:50%;background:var(--sc)}
 .ph-cv .art::after{
   content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:
@@ -398,7 +399,7 @@ for (let c = 0; c < 3; c++) for (let i = 0; i < N; i++) {
   el.className = 'tape';
   el.style.setProperty('--fc', PAL[i][0]);
   el.style.setProperty('--sc', PAL[i][1]);
-  el.innerHTML = `<div class="face sp" style='${faceBg('spine-' + f.id)}'><div class="ph ph-sp"><span class="dot"></span><span class="t">${f.t}</span><span class="v">VASARI</span><span class="b">VHS</span></div></div>`
+  el.innerHTML = `<div class="face sp" style='${faceBg('spine-' + f.id)}'><div class="ph ph-sp"><span class="pic"></span><span class="t">${f.t}</span><span class="v">VASARI</span><span class="b">VHS</span></div></div>`
     + `<div class="face cv" style='${faceBg('cover-' + f.id)}'><div class="ph ph-cv">${coverPH(f)}</div></div>`;
   stage.appendChild(el);
   const t = { el, sp: el.children[0], cv: el.children[1], v: c * N + i, i, lift: 0 };
