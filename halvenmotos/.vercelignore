@@ -1,0 +1,2 @@
+# Archivos que Vercel no debe publicar (migraciones y código de Edge Functions de Supabase)
+supabase/
