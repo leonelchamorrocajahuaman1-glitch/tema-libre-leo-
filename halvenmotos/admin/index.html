@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Panel | HALVEN MOTOS</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0c0f">
+<link rel="icon" href="data:,">
+<link rel="preload" href="https://fonts.gstatic.com/s/albertsans/v4/i7dOIFdwYjGaAMFtZd_QA1ZbYFc.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+<div id="gate" class="gate"><div class="spinner" aria-label="Cargando"></div></div>
+
+<div class="shell" id="shell" hidden>
+  <aside class="side" id="side" aria-label="Navegación del panel">
+    <div class="side-brand"><span>HalvenMotos<sup>®</sup></span><small>Panel</small></div>
+    <nav class="side-nav" id="sideNav"></nav>
+    <div class="side-foot">
+      <div class="me" id="me"></div>
+      <a class="side-link" href="../" target="_blank" rel="noopener">Ver tienda ↗</a>
+      <button class="side-link danger" type="button" id="logout">Cerrar sesión</button>
+    </div>
+  </aside>
+  <div class="side-backdrop" id="sideBackdrop" hidden></div>
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú"><svg viewBox="0 0 20 20"><path d="M3 5.5h14M3 10h14M3 14.5h14"/></svg></button>
+      <h1 id="pageTitle">Dashboard</h1>
+      <div class="top-actions">
+        <div class="notif-wrap">
+          <button class="icon-btn" id="bell" type="button" aria-label="Notificaciones" aria-expanded="false"><svg viewBox="0 0 20 20"><path d="M5 8a5 5 0 0 1 10 0c0 4.5 2 5.5 2 5.5H3S5 12.5 5 8M8.3 16.5a1.8 1.8 0 0 0 3.4 0"/></svg><span class="dotc" id="bellCount" hidden></span></button>
+          <div class="pop" id="bellPop" hidden></div>
+        </div>
+      </div>
+    </header>
+    <main id="view" tabindex="-1"></main>
+  </div>
+</div>
+<div class="tip" id="tip" role="tooltip" hidden></div>
+<script type="module" src="../assets/js/admin.js"></script>
+</body>
+</html>

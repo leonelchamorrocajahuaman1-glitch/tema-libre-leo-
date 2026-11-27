@@ -1,0 +1,13 @@
+# Configuración para la CLI de Supabase (supabase functions deploy).
+project_id = "qoqmcfkmkxtbyqfbpgby"
+
+# Mercado Pago no envía JWT de Supabase: la función valida la firma
+# x-signature (MP_WEBHOOK_SECRET) y consulta el pago a la API de Mercado Pago.
+[functions.mp-webhook]
+verify_jwt = false
+
+[functions.mp-create-preference]
+verify_jwt = true
+
+[functions.admin-user-status]
+verify_jwt = true

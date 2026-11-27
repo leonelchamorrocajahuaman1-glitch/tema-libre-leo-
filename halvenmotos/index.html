@@ -1,192 +1,26 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>HalvenMotos | Ride Out</title>
-<meta name="description" content="HalvenMotos superbikes in four satin pearl paints: magenta satin, deep sapphire, cocoa copper and violet pearl.">
+<title>HALVEN MOTOS | Ride Out</title>
+<meta name="description" content="HALVEN MOTOS: tienda online de motocicletas deportivas, naked, touring, urbanas y de alto rendimiento en Perú.">
+<meta name="theme-color" content="#0b0c0f">
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://images.higgs.ai" crossorigin>
+<link rel="preconnect" href="https://qoqmcfkmkxtbyqfbpgby.supabase.co" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/albertsans/v4/i7dOIFdwYjGaAMFtZd_QA1ZbYFc.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
-<style>
-@font-face{
-  font-family:"Albert Sans";
-  src:url(https://fonts.gstatic.com/s/albertsans/v4/i7dOIFdwYjGaAMFtZd_QA1ZbYFc.woff2) format("woff2");
-  font-weight:400 600;font-style:normal;font-display:swap;
-}
-:root{
-  --magenta:#782956;--ink:#1d222b;--muted:#4b4f57;--panel:rgba(246,246,246,.94);
-  --arrow:#ffe100;--arrow-ink:#16140a;--divider:rgba(29,34,43,.11);--u:1px;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--magenta)}
-body{
-  overflow:hidden;color:var(--ink);font-family:"Albert Sans",Arial,sans-serif;
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  -webkit-text-size-adjust:100%;text-size-adjust:100%;
-}
-button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
-:focus-visible{outline:2px solid #fff;outline-offset:3px}
-.specs :focus-visible{outline-color:var(--ink)}
-svg{display:block}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
-
-/* ---------- hero & layers ---------- */
-.hero{
-  position:relative;width:100%;height:100vh;height:100svh;overflow:hidden;isolation:isolate;
-  background:var(--magenta);
-}
-.dots{
-  position:absolute;left:0;top:0;width:100%;z-index:0;pointer-events:none;
-  background-image:radial-gradient(circle,rgba(255,255,255,.29) 0,rgba(255,255,255,.29) 1.15px,rgba(255,255,255,0) 1.75px);
-  -webkit-mask-image:linear-gradient(to bottom,#000 25%,transparent);
-  mask-image:linear-gradient(to bottom,#000 25%,transparent);
-}
-.word{
-  position:absolute;z-index:1;pointer-events:none;user-select:none;-webkit-user-select:none;
-  font-weight:450;line-height:1;
-}
-.word svg{width:100%;height:100%;overflow:visible;fill:#fff;font-family:"Albert Sans",Arial,sans-serif;font-weight:450}
-.bikes{position:absolute;left:0;top:0;width:100%;height:100%;z-index:2;pointer-events:none}
-.drag{
-  position:absolute;inset:0;z-index:3;touch-action:pan-y;cursor:grab;
-  user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
-}
-.drag.dragging{cursor:grabbing}
-
-/* ---------- nav (wide tier uses --u) ---------- */
-.nav{position:absolute;left:0;top:0;width:100%;height:calc(72*var(--u));z-index:4;pointer-events:none}
-.nav button{pointer-events:auto}
-.menu{
-  position:absolute;left:calc(31.5*var(--u));top:calc(15.5*var(--u));
-  width:max(30px,calc(40*var(--u)));height:max(30px,calc(40*var(--u)));
-  border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;
-}
-.menu svg{width:max(10px,calc(12*var(--u)));height:max(8px,calc(10*var(--u)))}
-.logo{
-  position:absolute;left:50%;top:calc(35.8*var(--u));transform:translate(-50%,-50%);
-  margin-left:calc(-1.5*var(--u));font-weight:400;color:#fff;line-height:1;letter-spacing:.032em;
-  white-space:nowrap;font-size:max(15px,calc(22.2*var(--u)));
-}
-.logo sup{font-size:.72em;line-height:0;vertical-align:.38em;letter-spacing:0}
-.contact{
-  position:absolute;right:calc(40*var(--u));top:calc(17*var(--u));
-  width:max(92px,calc(127*var(--u)));height:max(28px,calc(39*var(--u)));
-  border-radius:99px;background:#fff;color:var(--ink);font-weight:540;letter-spacing:.024em;
-  white-space:nowrap;font-size:max(11px,calc(12.6*var(--u)));
-}
-.short .nav,.tall .nav{height:56px}
-.short .menu{left:14px;top:9px;width:32px;height:32px}
-.short .logo{top:25px;font-size:16px}
-.short .contact{right:14px;top:10px;width:98px;height:30px;font-size:11.5px}
-.tall .menu{left:16px;top:13px;width:34px;height:34px}
-.tall .logo{top:30px;font-size:17px}
-.tall .contact{right:16px;top:14px;width:98px;height:32px;font-size:11.5px}
-.tall.narrow .menu{left:10px}
-.tall.narrow .logo{font-size:14px;letter-spacing:.01em}
-.tall.narrow .contact{right:10px;width:86px;font-size:11px}
-.tall.tablet .menu{left:24px;top:20px;width:46px;height:46px}
-.tall.tablet .menu svg{width:15px;height:12px}
-.tall.tablet .logo{top:43px;font-size:25px}
-.tall.tablet .contact{right:24px;top:21px;width:134px;height:44px;font-size:14.5px}
-
-/* ---------- arrows ---------- */
-.arrow{
-  position:absolute;z-index:5;transform:translate(-50%,-50%);left:0;top:0;width:36px;height:36px;
-  border-radius:50%;background:var(--arrow);color:var(--arrow-ink);display:grid;place-items:center;
-}
-.arrow::before{content:"";position:absolute;inset:-6px;border-radius:50%}
-.arrow svg{width:40%;height:40%;fill:none;stroke:currentColor;stroke-width:1.7}
-
-/* ---------- spec row (wide tier) ---------- */
-.specs{
-  position:absolute;left:50%;transform:translateX(-50%);z-index:4;background:var(--panel);
-  bottom:calc(29*var(--u));
-  width:min(calc(100% - 48px),max(calc(1313*var(--u)),880px));
-  padding:calc(16*var(--u)) calc(29*var(--u)) calc(13.5*var(--u)) calc(32*var(--u));
-  border-radius:max(12px,calc(17*var(--u)));
-}
-.specs-head{display:flex;justify-content:space-between;align-items:center;gap:12px;height:max(24px,calc(30*var(--u)))}
-.specs h2{line-height:1;font-weight:435;letter-spacing:-.013em;font-size:max(13px,calc(18*var(--u)))}
-.full{
-  flex:none;border-radius:99px;background:#fff;box-shadow:0 2px 8px rgba(20,20,30,.07);
-  font-weight:530;letter-spacing:.006em;
-  width:max(100px,calc(135*var(--u)));height:max(24px,calc(30*var(--u)));font-size:max(11px,calc(12.5*var(--u)));
-}
-.specs ul{
-  list-style:none;display:grid;margin-top:calc(20*var(--u));
-  grid-template-columns:minmax(max-content,186fr) minmax(max-content,223fr) minmax(max-content,223fr) minmax(max-content,212fr) minmax(max-content,229fr) minmax(max-content,176fr);
-}
-.specs li{
-  display:grid;grid-template-columns:max(15px,calc(18*var(--u))) max-content;align-items:center;position:relative;
-  column-gap:calc(15*var(--u));padding:calc(2*var(--u)) calc(6*var(--u)) calc(2*var(--u)) calc(47*var(--u));
-}
-.specs li+li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--divider)}
-.specs li>svg{width:100%;height:auto;fill:none;stroke:currentColor;stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round}
-.specs dl{line-height:1.2}
-.specs dt{color:var(--muted);font-weight:400;white-space:nowrap;font-size:max(11px,calc(12.9*var(--u)));letter-spacing:-.02em}
-.specs dd{font-weight:560;letter-spacing:.008em;white-space:nowrap;font-size:max(11.5px,calc(14.5*var(--u)));margin-top:calc(7.5*var(--u))}
-.wide .specs li:first-child{padding-left:calc(3*var(--u))}
-
-/* short */
-.short .specs{bottom:8px;width:min(calc(100% - 20px),960px);padding:6px 10px 7px;border-radius:12px}
-.short .specs-head{height:26px}
-.short .specs h2{font-size:13px}
-.short .full{width:100px;height:24px;font-size:11px}
-.short .specs ul{margin-top:4px;grid-template-columns:repeat(6,minmax(max-content,1fr))}
-.short.cols-3 .specs ul{grid-template-columns:repeat(3,minmax(max-content,1fr));row-gap:3px}
-.short .specs li{grid-template-columns:15px max-content;column-gap:6px;padding:1px 4px 1px 9px}
-.short .specs dt{font-size:11px}
-.short .specs dd{font-size:11.5px;margin-top:1px}
-
-/* tall */
-.tall .specs{bottom:max(10px,env(safe-area-inset-bottom));width:calc(100% - 20px);max-width:780px;padding:10px 12px 11px;border-radius:14px}
-.tall .specs-head{height:30px}
-.tall .specs h2{font-size:15px}
-.tall .full{width:108px;height:28px;font-size:11.5px}
-.tall .specs ul{margin-top:7px;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:7px}
-.tall.cols-3 .specs ul{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:12px}
-.tall .specs li{grid-template-columns:16px max-content;column-gap:8px;padding:1px 2px 1px 12px}
-.tall .specs dt{font-size:11.5px}
-.tall .specs dd{font-size:13px;margin-top:2px}
-.tall.narrow .specs li{column-gap:6px;padding-left:8px}
-.tall.narrow .specs dt{font-size:11px;letter-spacing:0}
-.tall.roomy .specs{padding:16px 15px 18px;border-radius:17px}
-.tall.roomy .specs h2{font-size:17px}
-.tall.roomy .full{width:116px;height:32px;font-size:12px}
-.tall.roomy .specs ul{margin-top:14px;row-gap:16px}
-.tall.roomy .specs dt{font-size:12.5px}
-.tall.roomy.narrow .specs dt{font-size:11px}
-.tall.roomy .specs dd{font-size:14.5px;margin-top:3px}
-.tall.tablet .specs{bottom:24px;width:calc(100% - 40px);max-width:960px;padding:24px 26px 28px;border-radius:22px}
-.tall.tablet .specs-head{height:42px}
-.tall.tablet .specs h2{font-size:23px}
-.tall.tablet .full{width:146px;height:42px;font-size:14.5px}
-.tall.tablet .specs ul{margin-top:24px;row-gap:28px}
-.tall.tablet .specs li{grid-template-columns:22px max-content;column-gap:12px;padding-left:20px}
-.tall.tablet .specs dt{font-size:15px}
-.tall.tablet .specs dd{font-size:18px;margin-top:5px}
-
-/* first item of every row: no divider, 2px left padding */
-.hero.short .specs li:first-child,
-.hero.short.cols-3 .specs li:nth-child(3n+1),
-.hero.tall:not(.cols-3) .specs li:nth-child(2n+1),
-.hero.tall.cols-3 .specs li:nth-child(3n+1){padding-left:2px}
-.hero.short.cols-3 .specs li:nth-child(3n+1)::before,
-.hero.tall:not(.cols-3) .specs li:nth-child(2n+1)::before,
-.hero.tall.cols-3 .specs li:nth-child(3n+1)::before{display:none}
-
-/* load-in */
-.js .hero.pending .word,
-.js .hero.pending .bikes,
-.js .hero.pending .nav,
-.js .hero.pending .arrow,
-.js .hero.pending .specs{opacity:0}
-</style>
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/store.css">
 </head>
-<body>
-<main class="hero pending wide" id="hero" aria-roledescription="carousel" aria-label="HalvenMotos paint colours">
+<body class="route-home">
+<a class="skip" href="#app">Saltar al contenido</a>
+
+<!-- ======================= HERO ORIGINAL ======================= -->
+<main id="top">
+<section class="hero pending wide" id="hero" aria-roledescription="carousel" aria-label="Motocicletas destacadas de HALVEN MOTOS">
   <div class="dots" id="dots" aria-hidden="true"></div>
 
   <h1 class="word" id="word">
@@ -198,733 +32,141 @@ svg{display:block}
   <div class="drag" id="drag" aria-hidden="true"></div>
 
   <header class="nav">
-    <button class="menu" type="button" aria-label="Menu">
+    <button class="menu" type="button" aria-label="Abrir menú" data-open-menu>
       <svg viewBox="0 0 12 10" aria-hidden="true" focusable="false"><path d="M0 1.2h12M0 5h12M0 8.8h12" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
     </button>
+    <a class="cartbtn" href="#/carrito" aria-label="Carrito de compras">
+      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2 3h2.2l2 9.6h9.4L17.8 6H5.4M8 16.6a1.1 1.1 0 1 0 0 .1M14.6 16.6a1.1 1.1 0 1 0 0 .1"/></svg>
+      <span class="count" data-cart-count hidden>0</span>
+    </a>
     <p class="logo">HalvenMotos<sup>®</sup></p>
-    <button class="contact" type="button">Contact Now</button>
+    <a class="explore" href="#catalogo" data-scroll="catalogo" data-hero-cta>Explorar motocicletas</a>
+    <a class="contact" href="#contacto" data-scroll="contacto">Contacto</a>
   </header>
 
-  <button class="arrow" id="prev" type="button" aria-label="Previous colour">
+  <button class="arrow" id="prev" type="button" aria-label="Motocicleta anterior">
     <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M15 8H1.6M7 2.4 1.4 8 7 13.6"/></svg>
   </button>
-  <button class="arrow" id="next" type="button" aria-label="Next colour">
+  <button class="arrow" id="next" type="button" aria-label="Motocicleta siguiente">
     <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13.4M9 2.4 14.6 8 9 13.6"/></svg>
   </button>
 
   <section class="specs" id="specs" aria-labelledby="specs-title">
     <div class="specs-head">
-      <h2 id="specs-title">Bike Spec Details</h2>
-      <button class="full" type="button">View Full Specs</button>
+      <div class="specs-title">
+        <h2 id="specs-title"><a id="heroName" href="#/catalogo">Ficha técnica</a></h2>
+        <span class="specs-price" id="heroPrice"></span>
+      </div>
+      <div class="specs-actions">
+        <a class="full ghost" id="heroAsk" href="#contacto" data-scroll="contacto">Consultar</a>
+        <button class="full buy" id="heroBuy" type="button" disabled>Comprar</button>
+      </div>
     </div>
     <ul>
       <li>
-        <svg viewBox="0 0 20 22" aria-hidden="true" focusable="false"><path d="M10 20.5S2 13.4 2 8.6a8 8 0 0 1 16 0c0 4.8-8 11.9-8 11.9z"/><path d="M10 13.6s-4.2-2.2-4.2-5.2a4.2 4.2 0 0 1 8.4 0c0 3-4.2 5.2-4.2 5.2z"/><circle cx="10" cy="8.5" r=".9"/></svg>
-        <dl><dt>Range (per tank)</dt><dd>310 km</dd></dl>
-      </li>
-      <li>
-        <svg viewBox="0 0 20 22" aria-hidden="true" focusable="false"><path d="M10 11.5V2.8a8.7 8.7 0 1 1-6.6 3z"/></svg>
-        <dl><dt>Top Speed</dt><dd>299 km/h</dd></dl>
+        <svg viewBox="0 0 22 22" aria-hidden="true" focusable="false"><path d="m8.6 14.4-6-7.3 4.6-3.8 3.8 4.6 3.8-4.6 4.6 3.8-6 7.3M4.5 9.4l4.6-3.8M17.5 9.4l-4.6-3.8"/><circle cx="11" cy="15.8" r="3.6"/><circle cx="11" cy="15.8" r=".9"/></svg>
+        <dl><dt>Cilindrada</dt><dd data-spec="cc">—</dd></dl>
       </li>
       <li>
         <svg viewBox="0 0 20 22" aria-hidden="true" focusable="false"><path d="M7.2 2h7.3l-2.4 6.6h5.2L6.8 20.4l2.1-7.8H3.3z"/></svg>
-        <dl><dt>Acceleration</dt><dd>2.9 seconds</dd></dl>
+        <dl><dt>Potencia</dt><dd data-spec="hp">—</dd></dl>
+      </li>
+      <li>
+        <svg viewBox="0 0 20 22" aria-hidden="true" focusable="false"><path d="M10 11.5V2.8a8.7 8.7 0 1 1-6.6 3z"/></svg>
+        <dl><dt>Velocidad máx.</dt><dd data-spec="speed">—</dd></dl>
+      </li>
+      <li>
+        <svg viewBox="0 0 20 22" aria-hidden="true" focusable="false"><circle cx="10" cy="12.5" r="7.5"/><path d="M10 12.5V8.2M8 2h4M10 2v3"/></svg>
+        <dl><dt>0–100 km/h</dt><dd data-spec="acc">—</dd></dl>
+      </li>
+      <li>
+        <svg viewBox="0 0 20 22" aria-hidden="true" focusable="false"><path d="M10 20.5S2 13.4 2 8.6a8 8 0 0 1 16 0c0 4.8-8 11.9-8 11.9z"/><path d="M10 13.6s-4.2-2.2-4.2-5.2a4.2 4.2 0 0 1 8.4 0c0 3-4.2 5.2-4.2 5.2z"/><circle cx="10" cy="8.5" r=".9"/></svg>
+        <dl><dt>Autonomía</dt><dd data-spec="range">—</dd></dl>
       </li>
       <li>
         <svg viewBox="0 0 20 22" aria-hidden="true" focusable="false"><circle cx="10" cy="11" r="2"/><path d="M10 9C6 7 6.2 2.6 9.4 2.4c3.4-.2 3.5 4 .6 6.6zM12 11c2-4 6.4-3.8 6.6-.6.2 3.4-4 3.5-6.6.6zM10 13c4 2 3.8 6.4.6 6.6-3.4.2-3.5-4-.6-6.6zM8 11c-2 4-6.4 3.8-6.6.6C1.2 8.2 5.4 8.1 8 11z"/></svg>
-        <dl><dt>Cooling</dt><dd>Liquid</dd></dl>
-      </li>
-      <li>
-        <svg viewBox="0 0 22 22" aria-hidden="true" focusable="false"><path d="m8.6 14.4-6-7.3 4.6-3.8 3.8 4.6 3.8-4.6 4.6 3.8-6 7.3M4.5 9.4l4.6-3.8M17.5 9.4l-4.6-3.8"/><circle cx="11" cy="15.8" r="3.6"/><circle cx="11" cy="15.8" r=".9"/></svg>
-        <dl><dt>Engine Layout</dt><dd>1200 cc V4</dd></dl>
-      </li>
-      <li>
-        <svg viewBox="0 0 20 22" aria-hidden="true" focusable="false"><path d="M5.4 12.2V5.6A3.6 3.6 0 0 1 9 2h2a3.6 3.6 0 0 1 3.6 3.6v6.6"/><path d="M5.4 12.2h9.2l2 3.2a1.5 1.5 0 0 1-1.3 2.3H4.7a1.5 1.5 0 0 1-1.3-2.3zM7.4 17.7v2.6M12.6 17.7v2.6"/></svg>
-        <dl><dt>Seat Capacity</dt><dd>2 seats</dd></dl>
+        <dl><dt>Refrigeración</dt><dd data-spec="cool">—</dd></dl>
       </li>
     </ul>
   </section>
 
   <p class="sr" id="status" aria-live="polite"></p>
+</section>
 </main>
 
-<script>
-(() => {
-'use strict';
+<!-- ======================= CABECERA FIJA (páginas internas y al hacer scroll) ======================= -->
+<header class="site-header" id="siteHeader">
+  <div class="sh-inner">
+    <button class="sh-icon" type="button" aria-label="Abrir menú" data-open-menu>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5.5h14M3 10h14M3 14.5h14"/></svg>
+    </button>
+    <a class="sh-logo" href="#/" data-store-logo>HalvenMotos<sup>®</sup></a>
+    <nav class="sh-links" aria-label="Principal">
+      <a href="#/catalogo">Catálogo</a>
+      <a href="#/servicios">Servicios</a>
+      <a href="#/nosotros">Nosotros</a>
+      <a href="#/contacto">Contacto</a>
+    </nav>
+    <div class="sh-actions">
+      <div class="notif-wrap" data-auth-only hidden>
+        <button class="sh-icon" type="button" id="notifBtn" aria-label="Notificaciones" aria-expanded="false">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8a5 5 0 0 1 10 0c0 4.5 2 5.5 2 5.5H3S5 12.5 5 8M8.3 16.5a1.8 1.8 0 0 0 3.4 0"/></svg>
+          <span class="count" id="notifCount" hidden>0</span>
+        </button>
+        <div class="notif-pop" id="notifPop" hidden></div>
+      </div>
+      <a class="sh-icon" href="#/favoritos" aria-label="Favoritos" data-auth-only hidden>
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 16.5S3 12.4 3 7.6A3.6 3.6 0 0 1 10 6a3.6 3.6 0 0 1 7 1.6c0 4.8-7 8.9-7 8.9z"/></svg>
+      </a>
+      <a class="sh-icon" href="#/cuenta" aria-label="Mi cuenta" id="accountLink">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="7" r="3.4"/><path d="M3.5 17a6.5 6.5 0 0 1 13 0"/></svg>
+      </a>
+      <a class="sh-icon" href="#/carrito" aria-label="Carrito de compras">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 3h2.2l2 9.6h9.4L17.8 6H5.4M8 16.6a1.1 1.1 0 1 0 0 .1M14.6 16.6a1.1 1.1 0 1 0 0 .1"/></svg>
+        <span class="count" data-cart-count hidden>0</span>
+      </a>
+    </div>
+  </div>
+</header>
 
-/* ================= constants ================= */
-const SHEET_WEBP = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261122_131809_0c1477f1-f13a-4b07-84e4-6ad1f33c15c5.png&w=3840&q=85';
-const SHEET_PNG = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261122_131809_0c1477f1-f13a-4b07-84e4-6ad1f33c15c5.png';
+<!-- ======================= MENÚ LATERAL ======================= -->
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer-backdrop" data-close-menu></div>
+  <nav class="drawer-panel" aria-label="Menú">
+    <div class="drawer-top">
+      <span class="drawer-logo" data-store-logo>HalvenMotos<sup>®</sup></span>
+      <button class="sh-icon" type="button" aria-label="Cerrar menú" data-close-menu>
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15"/></svg>
+      </button>
+    </div>
+    <a href="#/">Inicio</a>
+    <a href="#/catalogo">Catálogo</a>
+    <a href="#/servicios">Servicios</a>
+    <a href="#/nosotros">Nosotros</a>
+    <a href="#/galeria">Galería</a>
+    <a href="#/faq">Preguntas frecuentes</a>
+    <a href="#/contacto">Contacto</a>
+    <hr>
+    <a href="#/carrito">Carrito <span class="count inline" data-cart-count hidden>0</span></a>
+    <a href="#/pedidos" data-auth-only hidden>Mis pedidos</a>
+    <a href="#/favoritos" data-auth-only hidden>Favoritos</a>
+    <a href="#/cuenta" data-auth-only hidden>Mi cuenta</a>
+    <a href="admin/" data-staff-only hidden>Panel de administración</a>
+    <a href="#/login" data-guest-only>Iniciar sesión</a>
+    <a href="#/registro" data-guest-only>Crear cuenta</a>
+    <button type="button" class="drawer-logout" data-logout data-auth-only hidden>Cerrar sesión</button>
+  </nav>
+</div>
 
-const SLIDES = [
-  { name: 'Magenta satin', rgb: [0x78, 0x29, 0x56], box: [92, 122, 1749, 992],
-    marks: [[1041, 265.5, 1120, 294.5, 7.5], [1053, 255, 1109, 275.5, 3.6]] },
-  { name: 'Deep sapphire', rgb: [0x03, 0x38, 0x78], box: [1972, 121, 3636, 996],
-    marks: [[2921, 266, 3002, 294.5, 7.5], [2940, 257.5, 2984, 275, 3.6]] },
-  { name: 'Cocoa copper', rgb: [0x59, 0x34, 0x29], box: [91, 1113, 1748, 1992],
-    marks: [[1035, 1258.5, 1118, 1288.5, 7.5], [1058, 1249.5, 1114, 1271.5, 3.6]] },
-  { name: 'Violet pearl', rgb: [0x5b, 0x44, 0xa7], box: [1970, 1111, 3636, 1991],
-    marks: [[2921, 1260.5, 3002, 1289, 7.5], [2939, 1252, 2995, 1272.5, 3.6]] }
-];
-const N = SLIDES.length;
-const SIDE = 740 / 1240;            // 0.596774
-const TEX_W = 2048, TEX_H = 1024;
-const T_BIKE_L = 134, T_BIKE_W = 1780, T_GROUND = 960;
-const T_CY = T_GROUND - (628 - 427) * T_BIKE_W / 762; // ≈ 490.5
-const DUR = 1400, HOLD = 2000;
-const LETTERS = [['R', 22.5, 185], ['I', 214.5, 245.5], ['D', 282.5, 464], ['E', 495, 640],
-                 ['O', 760, 978], ['U', 1010, 1187], ['T', 1212, 1379.5]];
-const BG_ROWS = [0, 70, 120, 200, 248, 300, 380, 450, 530, 610, 700, 810];
-const BG_AMT = [-0.34, -0.26, -0.20, -0.08, 0, 0.08, 0.21, 0.36, 0.53, 0.66, 0.755, 0.82];
+<!-- ======================= CONTENIDO (rutas) ======================= -->
+<div id="app" tabindex="-1" aria-live="polite"></div>
 
-/* ================= elements ================= */
-const hero = document.getElementById('hero');
-const dots = document.getElementById('dots');
-const word = document.getElementById('word');
-const wordSvg = document.getElementById('wordSvg');
-const canvas = document.getElementById('bikes');
-const drag = document.getElementById('drag');
-const prevBtn = document.getElementById('prev');
-const nextBtn = document.getElementById('next');
-const specs = document.getElementById('specs');
-const statusEl = document.getElementById('status');
-const header = hero.querySelector('.nav');
+<footer class="site-footer" id="footer"></footer>
 
-const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-let reduced = mqReduce.matches;
+<a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" hidden>
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5A12.4 12.4 0 0 0 5.3 22.2L3.6 28.4l6.4-1.7A12.4 12.4 0 1 0 16 3.5zm0 22.6a10.2 10.2 0 0 1-5.2-1.4l-.4-.2-3.8 1 1-3.7-.2-.4A10.2 10.2 0 1 1 16 26.1zm5.6-7.6c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.1-.4.2-.7 0a8.4 8.4 0 0 1-4.1-3.6c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.1-.3-.2-.6-.3z"/></svg>
+</a>
 
-/* ================= easing ================= */
-function bez(p1, p2) {
-  // returns component at parameter t for a 1D cubic with endpoints 0 and 1
-  return t => { const m = 1 - t; return 3 * m * m * t * p1 + 3 * m * t * t * p2 + t * t * t; };
-}
-const bx = bez(0.51, 0), by = bez(0, 0.98);
-function solve(f, v) {
-  let lo = 0, hi = 1;
-  for (let i = 0; i < 24; i++) { const mid = (lo + hi) / 2; if (f(mid) < v) lo = mid; else hi = mid; }
-  return (lo + hi) / 2;
-}
-const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : by(solve(bx, x));
-const invEase = y => y <= 0 ? 0 : y >= 1 ? 1 : bx(solve(by, y));
-
-/* ================= geometry ================= */
-const G = { W: 1, H: 1, dpr: 1, wordX: 0, wordTop: 0, wordW: 1357, capH: 198.5,
-            bikeCX: 0, bikeCY: 0, bikeW: 762, ground: 0, step: 776, ax: [0, 0], ay: 0, d: 36 };
-
-function layout() {
-  const W = hero.clientWidth, H = hero.clientHeight;
-  if (!W || !H) return;
-  const ar = W / H;
-  const tier = ar < 1.2 ? 'tall' : (H <= 500 || W < 900) ? 'short' : 'wide';
-  const cls = hero.classList;
-  cls.toggle('wide', tier === 'wide');
-  cls.toggle('short', tier === 'short');
-  cls.toggle('tall', tier === 'tall');
-  cls.toggle('cols-3', (tier === 'tall' && W >= 560) || (tier === 'short' && W < 840));
-  cls.toggle('narrow', tier === 'tall' && W < 360);
-  cls.toggle('roomy', tier === 'tall' && W < 560 && H >= 720);
-  const tablet = tier === 'tall' && W >= 580 && H >= 900;
-  cls.toggle('tablet', tablet);
-  hero.style.setProperty('--u', (tier === 'wide' ? Math.min(W / 1440, H / 810) : 1) + 'px');
-
-  const panelTop = specs.offsetTop; // ignores transforms / translate
-  G.W = W; G.H = H;
-
-  if (tier === 'tall') {
-    const navBottom = tablet ? 84 : 58;
-    const band = panelTop - navBottom;
-    const wordK = (W - 14) / 1357;
-    const bikeW = 0.92 * W;
-    const overlap = 0.34 * 198.5 * wordK;
-    const bikeH = 0.527 * bikeW;
-    const d = tablet ? 54 : H >= 720 ? 44 : 38;
-    const gap = 12 + d;
-    const k = Math.min(1, (band - 16 - gap) / (overlap + bikeH));
-    const top = navBottom + (band - (overlap + bikeH) * k - gap) / 2;
-    G.wordW = 1357 * wordK * k; G.capH = 198.5 * wordK * k;
-    G.wordX = (W - G.wordW) / 2; G.wordTop = top;
-    G.bikeW = bikeW * k; G.bikeCX = W / 2;
-    G.bikeCY = top + overlap * k + bikeH * k / 2;
-    G.ground = top + (overlap + bikeH) * k;
-    G.step = W / 2 - 0.022 * W + (bikeW * k * SIDE) / 2;
-    G.d = d; G.ax = [W / 2 - 0.85 * d, W / 2 + 0.85 * d]; G.ay = G.ground + 12 + d / 2;
-  } else {
-    let u, ox, oy;
-    if (tier === 'wide') {
-      u = Math.min(W / 1440, H / 810);
-      ox = W / 2 - 720 * u;
-      oy = (H - 810 * u) * 0.5;
-      const room = panelTop - 8 - (oy + 628 * u);
-      if (room < 0) oy += room;
-    } else {
-      const band = panelTop - 46;
-      u = Math.min(W / 1440, (band - 10) / 478);
-      ox = W / 2 - 720 * u;
-      oy = 46 + (band - 478 * u) / 2 - 150 * u;
-    }
-    const X = x => ox + x * u, Y = y => oy + y * u;
-    G.wordX = X(22.5); G.wordTop = Y(159); G.wordW = 1357 * u; G.capH = 198.5 * u;
-    G.bikeCX = X(710); G.bikeCY = Y(427); G.bikeW = 762 * u; G.ground = Y(628);
-    G.step = 776 * u;
-    G.d = Math.max(28, 36 * u); G.ax = [X(229), X(1197.5)]; G.ay = Y(433);
-  }
-
-  // word
-  Object.assign(word.style, { left: G.wordX + 'px', top: G.wordTop + 'px', width: G.wordW + 'px', height: G.capH + 'px' });
-  // arrows
-  [prevBtn, nextBtn].forEach((b, i) => Object.assign(b.style, {
-    left: G.ax[i] + 'px', top: G.ay + 'px', width: G.d + 'px', height: G.d + 'px' }));
-  // dots
-  const s = G.bikeW / 762;
-  const tw = Math.max(22, 45.4 * s), th = Math.max(20, 41 * s);
-  dots.style.height = (G.wordTop + 0.75 * G.capH) + 'px';
-  dots.style.backgroundSize = tw + 'px ' + th + 'px';
-  dots.style.backgroundPosition = ((((W / 2 - tw / 2) % tw) + tw) % tw) + 'px ' + (31 * s - th / 2) + 'px';
-  // canvas
-  G.dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const cw = Math.round(W * G.dpr), ch = Math.round(H * G.dpr);
-  if (canvas.width !== cw) canvas.width = cw;
-  if (canvas.height !== ch) canvas.height = ch;
-  lastBg = '';
-  draw();
-}
-
-/* ================= word fitting ================= */
-function fitWord() {
-  const c = document.createElement('canvas').getContext('2d');
-  c.font = '450 100px "Albert Sans"';
-  const asc = c.measureText('T').actualBoundingBoxAscent;
-  if (!asc) return;
-  const size = 100 * 198.5 / asc;
-  c.font = `450 ${size}px "Albert Sans"`;
-  const NS = 'http://www.w3.org/2000/svg';
-  const frag = document.createDocumentFragment();
-  for (const [ch, left, right] of LETTERS) {
-    const m = c.measureText(ch);
-    const sx = (right - left) / (m.actualBoundingBoxLeft + m.actualBoundingBoxRight);
-    const t = document.createElementNS(NS, 'text');
-    t.setAttribute('font-size', size);
-    t.setAttribute('transform', `translate(${left - 22.5 + m.actualBoundingBoxLeft * sx} 198.5) scale(${sx} 1)`);
-    t.textContent = ch;
-    frag.appendChild(t);
-  }
-  wordSvg.replaceChildren(frag);
-}
-
-/* ================= background ================= */
-let lastBg = '';
-function currentColour(p) {
-  const f = Math.floor(p), fr = p - f;
-  const a = SLIDES[((f % N) + N) % N].rgb, b = SLIDES[(((f + 1) % N) + N) % N].rgb;
-  return [0, 1, 2].map(i => a[i] + (b[i] - a[i]) * fr);
-}
-function rowToPx(r) {
-  const A = [[0, 0], [159, G.wordTop], [628, G.ground], [810, G.H]];
-  let y = G.H;
-  for (let i = 0; i < 3; i++) {
-    if (r <= A[i + 1][0]) { const [r0, y0] = A[i], [r1, y1] = A[i + 1]; y = y0 + (y1 - y0) * (r - r0) / (r1 - r0); break; }
-  }
-  return Math.min(G.H, Math.max(0, y));
-}
-function paintBackground(p) {
-  const c = currentColour(p);
-  const stops = BG_ROWS.map((row, i) => {
-    const t = BG_AMT[i];
-    const ch = c.map(v => Math.round(t < 0 ? v * (1 + t) : v + (255 - v) * t));
-    return `rgb(${ch[0]},${ch[1]},${ch[2]}) ${rowToPx(row).toFixed(2)}px`;
-  });
-  const bg = 'linear-gradient(to bottom,' + stops.join(',') + ')';
-  if (bg !== lastBg) { hero.style.background = bg; lastBg = bg; }
-}
-
-/* ================= textures ================= */
-function loadImage(src) {
-  return new Promise((res, rej) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.decoding = 'async';
-    img.onload = () => res(img);
-    img.onerror = rej;
-    img.src = src;
-  });
-}
-
-function bilinear(src, w, h, x, y, out, k) {
-  x -= 0.5; y -= 0.5;
-  let x0 = Math.floor(x), y0 = Math.floor(y);
-  const fx = x - x0, fy = y - y0;
-  const cx = v => v < 0 ? 0 : v >= w ? w - 1 : v, cy = v => v < 0 ? 0 : v >= h ? h - 1 : v;
-  const xa = cx(x0), xb = cx(x0 + 1), ya = cy(y0), yb = cy(y0 + 1);
-  for (let c = 0; c < 3; c++) {
-    const p00 = src[(ya * w + xa) * 4 + c], p10 = src[(ya * w + xb) * 4 + c];
-    const p01 = src[(yb * w + xa) * 4 + c], p11 = src[(yb * w + xb) * 4 + c];
-    out[c] += k * ((p00 * (1 - fx) + p10 * fx) * (1 - fy) + (p01 * (1 - fx) + p11 * fx) * fy);
-  }
-}
-
-function paintMark(data, w, h, x0, y0, x1, y1, half) {
-  const src = new Uint8ClampedArray(data); // untouched copy for this mark
-  const dx = x1 - x0, dy = y1 - y0, len = Math.hypot(dx, dy);
-  const ux = dx / len, uy = dy / len, nx = -uy, ny = ux; // n points "below" the line
-  const minX = Math.max(0, Math.floor(Math.min(x0, x1) - 18)), maxX = Math.min(w - 1, Math.ceil(Math.max(x0, x1) + 18));
-  const minY = Math.max(0, Math.floor(Math.min(y0, y1) - 18)), maxY = Math.min(h - 1, Math.ceil(Math.max(y0, y1) + 18));
-  const up = [0, 0, 0], lo = [0, 0, 0];
-  const off = half + 2;
-  for (let py = minY; py <= maxY; py++) {
-    for (let px = minX; px <= maxX; px++) {
-      const rx = px + 0.5 - x0, ry = py + 0.5 - y0;
-      const along = rx * ux + ry * uy;
-      const n = rx * nx + ry * ny;
-      const out = Math.max(-3 - along, along - len - 3, 0);
-      const wgt = Math.min(1, Math.max(0, (half + 1.5 - Math.abs(n)) / 2.5)) * Math.max(0, 1 - out / 4);
-      if (wgt <= 0) continue;
-      const cxp = x0 + ux * along, cyp = y0 + uy * along;
-      up[0] = up[1] = up[2] = lo[0] = lo[1] = lo[2] = 0;
-      for (const a of [-3, 0, 3]) {
-        bilinear(src, w, h, cxp - nx * off + ux * a, cyp - ny * off + uy * a, up, 1 / 3);
-        bilinear(src, w, h, cxp + nx * off + ux * a, cyp + ny * off + uy * a, lo, 1 / 3);
-      }
-      const m = Math.min(1, Math.max(0, (n + half) / (2 * half)));
-      const i = (py * w + px) * 4;
-      for (let c = 0; c < 3; c++) {
-        const fill = up[c] + (lo[c] - up[c]) * m;
-        data[i + c] = data[i + c] * (1 - wgt) + fill * wgt;
-      }
-    }
-  }
-}
-
-function shadow(ctx, cx, cy, rx, ry, A) {
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.scale(1, ry / rx);
-  const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx);
-  g.addColorStop(0, `rgba(10,7,10,${A})`);
-  g.addColorStop(0.45, `rgba(10,7,10,${0.55 * A})`);
-  g.addColorStop(1, 'rgba(10,7,10,0)');
-  ctx.fillStyle = g;
-  ctx.fillRect(-rx, -rx, rx * 2, rx * 2);
-  ctx.restore();
-}
-
-function buildTextures(img) {
-  const sc = img.naturalWidth / 3840;
-  return SLIDES.map(sl => {
-    const [l, t, r, b] = sl.box.map(v => v * sc);
-    const w = Math.round(r - l), h = Math.round(b - t);
-    const cut = document.createElement('canvas');
-    cut.width = w; cut.height = h;
-    const cx = cut.getContext('2d', { willReadFrequently: true });
-    cx.drawImage(img, l, t, w, h, 0, 0, w, h);
-    const id = cx.getImageData(0, 0, w, h), d = id.data;
-    for (let i = 3; i < d.length; i += 4) {
-      const a = d[i];
-      d[i] = a < 8 ? 0 : Math.min(255, (a - 6) * 255 / 236);
-    }
-    for (const [mx0, my0, mx1, my1, half] of sl.marks) {
-      paintMark(d, w, h, mx0 * sc - l, my0 * sc - t, mx1 * sc - l, my1 * sc - t, half * sc);
-    }
-    cx.putImageData(id, 0, 0);
-
-    const tex = document.createElement('canvas');
-    tex.width = TEX_W; tex.height = TEX_H;
-    const tc = tex.getContext('2d');
-    shadow(tc, 1024, 954, 1010, 58, 0.30);
-    shadow(tc, 1024, 956, 720, 34, 0.26);
-    shadow(tc, T_BIKE_L + 0.158 * T_BIKE_W, 957, 300, 26, 0.85);
-    shadow(tc, T_BIKE_L + 0.843 * T_BIKE_W, 957, 300, 26, 0.85);
-    tc.imageSmoothingEnabled = true;
-    tc.imageSmoothingQuality = 'high';
-    const dh = h * T_BIKE_W / w;
-    tc.drawImage(cut, T_BIKE_L, T_GROUND - dh, T_BIKE_W, dh);
-    return tex;
-  });
-}
-
-/* ================= renderer ================= */
-let texCanvases = null;
-let R = null; // { kind:'gl'|'2d', ... }
-
-const VS = `
-attribute vec2 aP;
-uniform vec4 uR; uniform vec4 uT; uniform vec2 uS;
-varying vec2 vT;
-void main(){
-  vec2 p = uR.xy + aP * uR.zw;
-  vT = mix(uT.xy, uT.zw, aP);
-  gl_Position = vec4(p.x / uS.x * 2.0 - 1.0, 1.0 - p.y / uS.y * 2.0, 0.0, 1.0);
-}`;
-const FS = `
-#ifdef GL_FRAGMENT_PRECISION_HIGH
-precision highp float;
-#else
-precision mediump float;
-#endif
-uniform sampler2D uX; uniform vec2 uD; uniform float uB; uniform float uBl;
-varying vec2 vT;
-void main(){
-  if (uBl < 0.5) { gl_FragColor = texture2D(uX, vT, uB); return; }
-  vec4 s = vec4(0.0); float ws = 0.0;
-  for (int i = 0; i < 28; i++) {
-    float f = float(i) + 0.5;
-    float r = sqrt(f / 28.0);
-    float a = f * 2.399963;
-    float w = exp(-2.0 * r * r);
-    s += texture2D(uX, vT + vec2(cos(a), sin(a)) * r * uD, uB) * w;
-    ws += w;
-  }
-  gl_FragColor = s / ws;
-}`;
-
-function initGL() {
-  const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false })
-          || canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
-  if (!gl) return null;
-  if (gl.isContextLost()) return { kind: 'gl', gl, lost: true };
-  const sh = (type, src) => {
-    const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
-    return s;
-  };
-  const prog = gl.createProgram();
-  gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS));
-  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS));
-  gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
-  gl.useProgram(prog);
-  const buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);
-  const aP = gl.getAttribLocation(prog, 'aP');
-  gl.enableVertexAttribArray(aP);
-  gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
-  const U = {};
-  ['uR', 'uT', 'uS', 'uX', 'uD', 'uB', 'uBl'].forEach(n => U[n] = gl.getUniformLocation(prog, n));
-  gl.uniform1i(U.uX, 0);
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-  gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
-  const aniso = gl.getExtension('EXT_texture_filter_anisotropic') ||
-                gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic') ||
-                gl.getExtension('MOZ_EXT_texture_filter_anisotropic');
-  const textures = texCanvases.map(c => {
-    const t = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, t);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-    gl.generateMipmap(gl.TEXTURE_2D);
-    if (aniso) {
-      const max = gl.getParameter(aniso.MAX_TEXTURE_MAX_ANISOTROPY_EXT) || 1;
-      gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(4, max));
-    }
-    return t;
-  });
-  return { kind: 'gl', gl, U, textures, lost: false };
-}
-
-function init2D() {
-  const ctx = canvas.getContext('2d');
-  return ctx ? { kind: '2d', ctx } : null;
-}
-
-function startRenderer() {
-  if (!texCanvases) return;
-  let r = null;
-  try { r = initGL(); } catch (e) { r = null; }
-  if (!r) r = init2D();
-  R = r && !r.lost ? r : null;
-  draw();
-  if (R && settled()) scheduleAutoplay(revealed ? HOLD : null);
-}
-
-canvas.addEventListener('webglcontextlost', e => {
-  e.preventDefault();
-  R = null;
-  clearAutoplay();
-});
-canvas.addEventListener('webglcontextrestored', () => {
-  try { R = initGL(); } catch (e) { R = null; }
-  if (R && R.lost) R = null;
-  draw();
-  if (R && settled()) scheduleAutoplay(HOLD);
-});
-
-/* ================= carousel state ================= */
-let pos = 0;
-let anim = null;      // { from, to, start }
-let queued = 0;
-let rafId = 0;
-
-const settled = () => !anim && activePointer === null;
-const slideOf = i => ((i % N) + N) % N;
-
-function draw() {
-  paintBackground(pos);
-  if (!R) return;
-  const { W, H, dpr, bikeW, bikeCX, bikeCY, step } = G;
-  const reach = Math.ceil((W / 2 + 0.4 * bikeW) / step) + 1;
-  const base = Math.round(pos);
-  const quads = [];
-  for (let i = base - reach; i <= base + reach; i++) {
-    const o = i - pos, t = Math.min(1, Math.abs(o));
-    const s = 1 + (SIDE - 1) * t;
-    const cx = bikeCX + o * step;
-    const q = bikeW * s / T_BIKE_W;
-    const sigma = 4.5 * (bikeW / 762) * t;
-    const left = cx - 1024 * q, top = bikeCY - T_CY * q, w = TEX_W * q, h = TEX_H * q;
-    const grow = sigma > 0.06 ? 2.2 * sigma : 0;
-    if (left - grow > W + 20 || left + w + grow < -20 || top - grow > H + 20 || top + h + grow < -20) continue;
-    quads.push({ o: Math.abs(o), slide: slideOf(i), left, top, w, h, q, sigma });
-  }
-  quads.sort((a, b) => b.o - a.o);
-
-  if (R.kind === 'gl') {
-    const { gl, U, textures } = R;
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.clearColor(0, 0, 0, 0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.uniform2f(U.uS, W, H);
-    gl.activeTexture(gl.TEXTURE0);
-    for (const d of quads) {
-      gl.bindTexture(gl.TEXTURE_2D, textures[d.slide]);
-      if (d.sigma <= 0.06) {
-        gl.uniform1f(U.uBl, 0);
-        gl.uniform1f(U.uB, -0.35);
-        gl.uniform4f(U.uR, d.left, d.top, d.w, d.h);
-        gl.uniform4f(U.uT, 0, 0, 1, 1);
-      } else {
-        const g = 2.2 * d.sigma;
-        const gu = g / d.w, gv = g / d.h;
-        gl.uniform1f(U.uBl, 1);
-        gl.uniform1f(U.uB, Math.log2(Math.max(1, d.sigma * dpr * 0.55)));
-        gl.uniform4f(U.uR, d.left - g, d.top - g, d.w + 2 * g, d.h + 2 * g);
-        gl.uniform4f(U.uT, -gu, -gv, 1 + gu, 1 + gv);
-        gl.uniform2f(U.uD, 2 * d.sigma / d.w, 2 * d.sigma / d.h);
-      }
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    }
-  } else {
-    const ctx = R.ctx;
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    for (const d of quads) {
-      ctx.filter = d.sigma > 0.06 ? `blur(${d.sigma * dpr}px)` : 'none';
-      ctx.drawImage(texCanvases[d.slide], d.left, d.top, d.w, d.h);
-    }
-    ctx.filter = 'none';
-  }
-}
-
-function requestDraw() {
-  if (!rafId) rafId = requestAnimationFrame(frame);
-}
-function frame(now) {
-  rafId = 0;
-  if (anim) {
-    const x = Math.min(1, Math.max(0, (now - anim.start) / DUR));
-    pos = anim.from + (anim.to - anim.from) * ease(x);
-    if (x >= 1) {
-      pos = anim.to;
-      anim = null;
-      draw();
-      onSettle();
-      return;
-    }
-    draw();
-    rafId = requestAnimationFrame(frame);
-  } else {
-    draw();
-  }
-}
-
-function announce(slide) { statusEl.textContent = SLIDES[slide].name; }
-
-function startMove(from, to, start) {
-  anim = { from, to, start };
-  requestDraw();
-}
-
-function onSettle() {
-  pos = Math.round(pos);
-  if (queued) {
-    const d = queued; queued = 0;
-    go(d, true);
-    return;
-  }
-  scheduleAutoplay(HOLD);
-}
-
-function go(dir, user) {
-  if (activePointer !== null) return;
-  if (anim) { if (user) queued = dir; return; }
-  clearAutoplay();
-  const from = Math.round(pos), to = from + dir;
-  if (user) announce(slideOf(to));
-  if (reduced) { pos = to; requestDraw(); onSettle(); return; }
-  startMove(from, to, performance.now());
-}
-
-function joinCurve(target) {
-  const diff = target - pos;
-  const remaining = Math.min(1, Math.abs(diff));
-  if (remaining < 1e-6 || reduced) { pos = target; requestDraw(); onSettle(); return; }
-  const dir = Math.sign(diff);
-  startMove(target - dir, target, performance.now() - invEase(1 - remaining) * DUR);
-}
-
-/* ================= autoplay ================= */
-let autoTimer = 0;
-let focusPause = false;
-let revealed = false;
-
-function canAutoplay() {
-  return !reduced && !!R && !document.hidden && activePointer === null && !focusPause;
-}
-function clearAutoplay() { if (autoTimer) { clearTimeout(autoTimer); autoTimer = 0; } }
-function scheduleAutoplay(delay) {
-  clearAutoplay();
-  if (delay == null || !revealed || !settled() || !canAutoplay()) return;
-  autoTimer = setTimeout(() => {
-    autoTimer = 0;
-    if (canAutoplay() && settled()) go(1, false);
-  }, delay);
-}
-
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) clearAutoplay();
-  else if (settled()) scheduleAutoplay(HOLD);
-});
-const onReduce = () => {
-  reduced = mqReduce.matches;
-  if (reduced) clearAutoplay(); else if (settled()) scheduleAutoplay(HOLD);
-};
-if (mqReduce.addEventListener) mqReduce.addEventListener('change', onReduce); else mqReduce.addListener(onReduce);
-
-const isFocusVisible = el => { try { return !!el && el.matches(':focus-visible'); } catch (e) { return false; } };
-hero.addEventListener('focusin', e => {
-  if (e.target.tagName === 'BUTTON' && isFocusVisible(e.target)) { focusPause = true; clearAutoplay(); }
-});
-hero.addEventListener('focusout', () => {
-  setTimeout(() => {
-    const a = document.activeElement;
-    const was = focusPause;
-    focusPause = !!a && hero.contains(a) && a.tagName === 'BUTTON' && isFocusVisible(a);
-    if (was && !focusPause && settled()) scheduleAutoplay(HOLD);
-  }, 0);
-});
-
-/* ================= arrows ================= */
-prevBtn.addEventListener('click', () => go(-1, true));
-nextBtn.addEventListener('click', () => go(1, true));
-// keyboard focus via Tab on arrow → keydown Enter/Space are native button clicks
-
-/* ================= drag ================= */
-let activePointer = null;
-let dragging = false, decided = false;
-let startX = 0, startY = 0, startPos = 0, startSlide = 0;
-let resumeTarget = null;
-let trail = [];
-
-drag.addEventListener('pointerdown', e => {
-  if (activePointer !== null) return;
-  if (e.pointerType === 'mouse' && e.button !== 0) return;
-  activePointer = e.pointerId;
-  resumeTarget = anim ? anim.to : null;
-  anim = null;
-  queued = 0;
-  clearAutoplay();
-  try { drag.setPointerCapture(e.pointerId); } catch (err) {}
-  dragging = false; decided = false;
-  startX = e.clientX; startY = e.clientY; startPos = pos;
-  startSlide = slideOf(resumeTarget !== null ? resumeTarget : Math.round(pos));
-  trail = [{ x: e.clientX, t: e.timeStamp }];
-});
-
-drag.addEventListener('pointermove', e => {
-  if (e.pointerId !== activePointer) return;
-  const dx = e.clientX - startX, dy = e.clientY - startY;
-  if (!dragging) {
-    if (decided || Math.hypot(dx, dy) < 5) return;
-    decided = true;
-    if (Math.abs(dx) <= Math.abs(dy)) return; // vertical: leave it to the browser
-    dragging = true;
-    drag.classList.add('dragging');
-  }
-  if (e.cancelable) e.preventDefault();
-  const now = e.timeStamp;
-  trail.push({ x: e.clientX, t: now });
-  while (trail.length > 2 && now - trail[0].t > 90) trail.shift();
-  pos = startPos - dx / G.step;
-  requestDraw();
-});
-
-function release(e, cancelled) {
-  if (e.pointerId !== activePointer) return;
-  activePointer = null;
-  try { if (drag.hasPointerCapture(e.pointerId)) drag.releasePointerCapture(e.pointerId); } catch (err) {}
-  drag.classList.remove('dragging');
-  if (dragging) {
-    dragging = false;
-    const now = e.timeStamp;
-    const last = trail[trail.length - 1];
-    let v = 0;
-    if (now - last.t < 90) {
-      const first = trail.find(p => last.t - p.t <= 90) || trail[0];
-      const dt = last.t - first.t;
-      if (dt > 0) v = (last.x - first.x) / dt;
-    }
-    let target = Math.round(pos);
-    if (Math.abs(v) > 0.45 && !cancelled) target = v < 0 ? Math.ceil(pos) : Math.floor(pos);
-    if (slideOf(target) !== startSlide) announce(slideOf(target));
-    joinCurve(target);
-  } else {
-    joinCurve(resumeTarget !== null ? resumeTarget : Math.round(pos));
-  }
-  resumeTarget = null;
-}
-drag.addEventListener('pointerup', e => release(e, false));
-drag.addEventListener('pointercancel', e => release(e, true));
-drag.addEventListener('lostpointercapture', e => release(e, false));
-
-/* ================= load sequence ================= */
-function reveal() {
-  if (revealed) return;
-  revealed = true;
-  requestAnimationFrame(() => {
-    hero.classList.remove('pending');
-    if (!reduced && Element.prototype.animate) {
-      const kf = [{ opacity: 0, translate: '0 16px' }, { opacity: 1, translate: '0 0' }];
-      const play = (el, delay) => el.animate(kf, { duration: 850, easing: 'cubic-bezier(.22,1,.36,1)', delay, fill: 'backwards' });
-      play(word, 0); play(canvas, 60); play(header, 120);
-      play(prevBtn, 150); play(nextBtn, 150); play(specs, 150);
-    }
-    // first wait begins 1000 ms after load-in starts
-    if (settled()) scheduleAutoplay(1000 + HOLD);
-  });
-}
-
-new ResizeObserver(() => layout()).observe(hero);
-layout();
-
-const fontP = (document.fonts && document.fonts.load)
-  ? document.fonts.load('450 100px "Albert Sans"').then(f => { if (f && f.length) { fitWord(); layout(); } })
-  : Promise.resolve();
-
-const sheetP = loadImage(SHEET_WEBP).catch(() => loadImage(SHEET_PNG)).then(img => {
-  texCanvases = buildTextures(img);
-  startRenderer();
-});
-
-Promise.allSettled([fontP, sheetP]).then(reveal);
-setTimeout(reveal, 6000);
-})();
-</script>
+<script type="module" src="assets/js/store.js"></script>
 </body>
 </html>
