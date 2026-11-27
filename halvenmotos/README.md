@@ -17,6 +17,7 @@ panel de administración independiente. Ambos usan la misma base de datos en **S
 halvenmotos/
 ├── index.html                  Tienda (hero original + rutas por hash)
 ├── admin/index.html            Panel de administración
+├── vercel.json                 Cabeceras de seguridad para Vercel (sin build)
 ├── assets/
 │   ├── css/base.css            Tokens (negro, blanco, gris metálico, amarillo) y componentes comunes
 │   ├── css/store.css           Hero original (geometría intacta) + estilos de la tienda
@@ -160,13 +161,34 @@ python3 -m http.server 8080
 ```
 Abre `http://localhost:8080` (tienda) y `http://localhost:8080/admin/` (panel).
 
-### Publicar
-Es un sitio estático: publica la carpeta `halvenmotos/` en cualquier hosting estático
-(Hostinger, Netlify, Vercel, Cloudflare Pages o GitHub Pages). No requiere build.
-Después:
-1. Actualiza *Site URL* y *Redirect URLs* en Supabase Auth con tu dominio.
-2. Configura `SITE_URL` (y los secretos de Mercado Pago) en Edge Functions.
-3. Revisa en el panel: WhatsApp y contacto (Contenido), datos bancarios, RUC y textos legales (Configuración), precios y stock de las motos.
+### Publicar en Vercel
+Es un sitio estático: no necesita build ni variables de entorno en Vercel. La conexión con
+Supabase viaja en `assets/js/config.js` (URL y clave pública), así que se conserva tal cual.
+`vercel.json` añade cabeceras de seguridad y `noindex` para `/admin`. Las rutas usan `#/…`,
+por eso no hacen falta reglas de reescritura.
+
+**Opción A — desde la web (recomendada)**
+1. Fusiona la rama `claude/bold-newton-sloieq` en tu rama principal (o elige esa rama como *Production Branch* en Vercel).
+2. En vercel.com → **Add New… → Project** → importa el repositorio `tema-libre-leo-`.
+3. **Root Directory:** `halvenmotos` · **Framework Preset:** `Other` · deja vacíos *Build Command*, *Output Directory* e *Install Command*.
+4. **Deploy.** Obtendrás una URL tipo `https://halvenmotos.vercel.app` (el panel queda en `/admin/`).
+
+**Opción B — con la CLI**
+```bash
+npm i -g vercel
+```
+```bash
+cd halvenmotos && vercel
+```
+```bash
+vercel --prod
+```
+(En la primera ejecución responde: *Link to existing project?* No · directorio `./` · sin build.)
+
+**Después de publicar (obligatorio para Auth y pagos):**
+1. Supabase → Authentication → URL Configuration: *Site URL* = tu URL de Vercel (o tu dominio) y en *Redirect URLs* agrega `https://TU-URL/**`.
+2. Supabase → Edge Functions → Secrets: `SITE_URL` = `https://TU-URL/` (con la barra final).
+3. Si conectas un dominio propio en Vercel (Settings → Domains), repite los pasos 1 y 2 con ese dominio.
 
 ### Volver a desplegar la base de datos o las funciones (CLI, opcional)
 ```bash
@@ -191,12 +213,35 @@ supabase functions deploy mp-create-preference mp-webhook admin-user-status
 
 ## 8. Pruebas realizadas (contra la base real)
 
-- **Seguridad por API (27 comprobaciones):** el cliente no puede cambiar su rol, precios, stock, estados ni pagos, ni insertar pedidos directamente, ni usar funciones de administración o la del webhook, ni subir archivos. Un pedido enviado con precio manipulado se cobra con el precio real, y el stock se descuenta.
-- **Tienda (navegador):** carrito, cantidades, checkout que exige iniciar sesión, error con contraseña incorrecta, validaciones, pedido creado con número, carrito vaciado, Mis pedidos, cancelación (el stock vuelve), favoritos, edición de perfil, buscador y filtros, y el bloqueo de `/admin` para clientes.
-- **Panel (navegador):** dashboard, crear categoría, crear moto con slug automático, subida de foto a Storage visible en la tienda, ocultar/publicar, editar precio, alerta de stock bajo, cambio de estado reflejado en la cuenta del cliente, pagos manuales, desactivar una cuenta (el usuario queda bloqueado en Auth) y reactivarla, y WhatsApp configurable.
-- **Móvil:** 320×568, 390×844 y 768×1024 sin desbordes horizontales.
-- Los usuarios, pedidos y archivos de prueba se **eliminaron** al terminar.
+Revisión final, con usuarios de prueba temporales (`*@halven.test`) de los cuatro roles, borrados al terminar:
 
-**No probado:** el envío real de correos (registro y recuperación) para no enviar correos a direcciones
-inventadas, y el cobro real con Mercado Pago, que necesita tu token. Haz una compra de prueba con un
-token de **prueba** de Mercado Pago antes de usar el de producción.
+| Área | Resultado |
+|---|---|
+| Rutas y enlaces: 74 páginas (tienda como invitado, cliente y admin + 8 secciones del panel) | Sin enlaces rotos, sin errores de consola, sin peticiones fallidas; rutas inexistentes muestran 404 |
+| Seguridad por API (anónimo, cliente, ventas, catálogo, admin) | 38/38 |
+| Registro, login, logout, sesión persistente, rutas privadas, acceso al panel por rol | 26/26 (el registro se probó interceptando la petición: no se envió correo) |
+| Panel: categorías, motos, fotos (Storage), precios, stock, pedidos, pagos manuales, clientes, roles, bloqueo, contenido y configuración | Todo correcto |
+| Precios reales: precio manipulado ignorado; precio cambiado por el admin con la moto ya en el carrito → se cobra el precio nuevo | Correcto |
+| Diseño en 10 tamaños (1920×1080 a 320×568, incluido celular horizontal) | Sin desbordes; se corrigieron la ficha del hero en tablets verticales y el menú de "Mi cuenta" en celulares |
+
+**No probado:** envío real de correos (confirmación de registro y recuperación de contraseña), cobro real
+con Mercado Pago (necesita tu token) y un despliegue real en Vercel.
+
+---
+
+## 9. Tareas que dependen de ti
+
+1. **Publicar en Vercel** (sección 6) y anotar la URL final.
+2. **Supabase Auth → URL Configuration:** *Site URL* y *Redirect URLs* con tu URL o dominio.
+3. **SMTP propio** (Supabase → Authentication → SMTP Settings) con Resend, Brevo, SendGrid, etc. Sin él, el envío de correos de Supabase es muy limitado.
+4. **Probar el registro y la recuperación de contraseña** con tu propio correo una vez configurados los pasos 2 y 3.
+5. **Crear el primer administrador** (sección 5).
+6. **Mercado Pago:**
+   - Crea una aplicación en Mercado Pago Developers (Perú) y copia el *Access Token* (primero el de prueba).
+   - En Supabase → Edge Functions → Secrets agrega `MP_ACCESS_TOKEN`, `SITE_URL` y `MP_WEBHOOK_SECRET`.
+   - En Mercado Pago → Webhooks registra `https://qoqmcfkmkxtbyqfbpgby.supabase.co/functions/v1/mp-webhook` (evento *Pagos*) y copia su clave secreta en `MP_WEBHOOK_SECRET`.
+   - Activa Mercado Pago en Panel → Configuración → Métodos de pago y haz una compra de prueba.
+   - Cuando todo funcione, cambia al token de producción.
+7. **Dominio propio** (opcional): agrégalo en Vercel → Settings → Domains, apunta el DNS como indique Vercel y repite el paso 2 y el `SITE_URL`.
+8. **Contenido real en el panel:** WhatsApp, teléfono, correo, dirección y redes (Contenido); datos bancarios, RUC, razón social y textos legales revisados por tu asesor (Configuración).
+9. **Catálogo real:** los precios, fichas y stock de las 4 motos iniciales son valores de arranque. Reemplázalos o agrega tus motos con fotos reales.

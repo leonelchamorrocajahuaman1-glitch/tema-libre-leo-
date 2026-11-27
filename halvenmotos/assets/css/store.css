@@ -419,3 +419,8 @@ body.route-home:not(.past-hero) .wa-float{opacity:0;pointer-events:none;transfor
   .panel{padding:16px}
   .cart-line{gap:12px}
 }
+/* Tablet vertical: la cabecera de la ficha también crece (nombre arriba, botones abajo) */
+.tall.tablet .specs-head{height:auto;row-gap:14px}
+.tall.tablet .specs-actions{gap:12px}
+/* Menú de "Mi cuenta" en celular: los enlaces bajan de línea en vez de esconderse */
+@media (max-width:820px){.acc-nav{flex-wrap:wrap;overflow:visible}.acc-nav a{padding:9px 12px;background:var(--card)}}
