@@ -91,11 +91,16 @@ function compose(cut) {
   const tc = tex.getContext('2d');
   shadow(tc, 1024, 954, 1010, 58, 0.30);
   shadow(tc, 1024, 956, 720, 34, 0.26);
-  shadow(tc, T_BIKE_L + 0.158 * T_BIKE_W, 957, 300, 26, 0.85);
-  shadow(tc, T_BIKE_L + 0.843 * T_BIKE_W, 957, 300, 26, 0.85);
+  // Ancho fijo como en la lámina original; si la moto es más alta en proporción
+  // (espejos, parabrisas), se ajusta por altura para que no se salga del lienzo.
+  // Las motos de la lámina (proporción ~0.525) quedan exactamente igual.
+  const MAX_H = 935;
+  const k = Math.min(T_BIKE_W / cut.width, MAX_H / cut.height);
+  const dw = cut.width * k, dh = cut.height * k, dx = 1024 - dw / 2;
+  shadow(tc, dx + 0.158 * dw, 957, 300 * dw / T_BIKE_W, 26, 0.85);
+  shadow(tc, dx + 0.843 * dw, 957, 300 * dw / T_BIKE_W, 26, 0.85);
   tc.imageSmoothingEnabled = true; tc.imageSmoothingQuality = 'high';
-  const dh = cut.height * T_BIKE_W / cut.width;
-  tc.drawImage(cut, T_BIKE_L, T_GROUND - dh, T_BIKE_W, dh);
+  tc.drawImage(cut, dx, T_GROUND - dh, dw, dh);
   return tex;
 }
 function textureFromSheet(img, n) {
