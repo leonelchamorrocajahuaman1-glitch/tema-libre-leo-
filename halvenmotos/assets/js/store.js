@@ -21,7 +21,7 @@ const settingsP = loadSettings().then((s) => { S = s; applySettings(); return s;
 // Hero: motos destacadas desde la base de datos
 const heroSlidesP = sb.from('motorcycles').select(MOTO_FIELDS)
   .eq('is_published', true).eq('is_featured', true).not('hero_image', 'is', null)
-  .order('sort_order').limit(8)
+  .order('sort_order').limit(10)
   .then(({ data, error }) => {
     if (error) throw error;
     return (data || []).map((m) => ({ rgb: hexToRgb(m.hero_color) || [40, 42, 50], image: m.hero_image, moto: m }));
